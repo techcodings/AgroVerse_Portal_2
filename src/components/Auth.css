@@ -1,0 +1,370 @@
+/* ========================================
+   Auth.css (Neon Circuit Theme)
+   Matches VersePortal.css
+   ======================================== */
+
+/* --- Import Root Variables --- */
+/* (This assumes VersePortal.css is loaded, but we'll redefine for safety) */
+:root {
+  --color-bg-primary: #0a0e0a;
+  --color-bg-secondary: #141a14;
+  --color-bg-tertiary: #1f2a1f;
+  --color-text-primary: #f0ffe0;
+  --color-text-secondary: #d4f7a6;
+  --color-text-muted: #8fb569;
+  --color-accent-yellow: #f4ff4e;
+  --color-accent-lime: #bef22d;
+  --color-accent-green: #34d399;
+  --color-accent-red: #ff6b6b;
+  --color-border: #2d3d2d;
+  --color-border-light: #3d5a3d;
+  --gradient-primary: linear-gradient(135deg, var(--color-accent-yellow), var(--color-accent-lime), var(--color-accent-green));
+  --gradient-secondary: linear-gradient(135deg, var(--color-accent-neon), var(--color-accent-chartreuse));
+  --border-radius-sm: 0.5rem;
+  --border-radius-md: 0.75rem;
+  --border-radius-lg: 1rem;
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --shadow-neon-sm: 0 0 10px rgba(244, 255, 78, 0.2), 0 0 20px rgba(190, 242, 45, 0.1);
+  --shadow-neon-md: 0 4px 20px rgba(244, 255, 78, 0.3), 0 0 30px rgba(190, 242, 45, 0.2);
+  --shadow-neon-lg: 0 8px 32px rgba(244, 255, 78, 0.4), 0 0 60px rgba(190, 242, 45, 0.3);
+}
+
+/* Auth Overlay */
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  /* align-items: center; <-- This was causing the issue */
+  align-items: flex-start; /* <-- This is the fix */
+  justify-content: center;
+  padding: 1rem;
+  padding-top: 10vh; /* <-- Added padding to push it down from the top */
+  animation: fadeIn 0.3s ease;
+  overflow-y: auto; /* Added to ensure scrolling if content is long */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Auth Container */
+.auth-container {
+  backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(20, 26, 20, 0.9);
+  border: 2px solid rgba(244, 255, 78, 0.3);
+  box-shadow: var(--shadow-neon-lg);
+  border-radius: var(--border-radius-lg);
+  padding: 2.5rem;
+  max-width: 450px;
+  width: 100%;
+  position: relative;
+  animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform-origin: top;
+  margin-bottom: auto; /* Added to help with positioning */
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.auth-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(244, 255, 78, 0.05);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 24px;
+  transition: all 0.2s ease;
+}
+
+.auth-close:hover {
+  background: rgba(255, 107, 107, 0.1);
+  transform: rotate(90deg);
+  border-color: var(--color-accent-red);
+  color: var(--color-accent-red);
+}
+
+/* Auth Header */
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-logo {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-secondary);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: #0a0e0a;
+  box-shadow: var(--shadow-neon-md);
+  animation: logoPulse 3s ease-in-out infinite;
+}
+
+@keyframes logoPulse {
+  0%, 100% { 
+    transform: scale(1); 
+    box-shadow: var(--shadow-neon-md);
+  }
+  50% { 
+    transform: scale(1.1); 
+    box-shadow: var(--shadow-neon-lg);
+  }
+}
+
+.auth-header h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.auth-header p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+/* Auth Alert */
+.auth-alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--border-radius-sm);
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  animation: slideDown 0.3s ease;
+  border: 1px solid transparent;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.auth-alert.error {
+  background: rgba(255, 107, 107, 0.1);
+  border-color: rgba(255, 107, 107, 0.3);
+  color: #fca5a5;
+}
+
+.auth-alert.success {
+  background: rgba(190, 242, 45, 0.1);
+  border-color: rgba(190, 242, 45, 0.3);
+  color: var(--color-accent-lime);
+}
+
+/* Auth Form */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.form-group input {
+  padding: 0.875rem 1rem;
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: var(--color-accent-yellow);
+  background: var(--color-bg-secondary);
+  box-shadow: 0 0 10px rgba(244, 255, 78, 0.3);
+}
+
+.form-group input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Password Input */
+.password-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-input input {
+  flex: 1;
+  padding-right: 3rem;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease;
+}
+
+.toggle-password:hover {
+  color: var(--color-text-primary);
+}
+
+/* Form Footer */
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.5rem;
+}
+
+.forgot-password {
+  color: var(--color-accent-yellow);
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.forgot-password:hover {
+  color: var(--color-accent-lime);
+  text-decoration: underline;
+}
+
+/* Auth Buttons */
+.btn-auth-primary {
+  background: var(--gradient-primary);
+  color: #0a0e0a;
+  padding: 1rem;
+  border-radius: var(--border-radius-md);
+  border: none;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+  box-shadow: var(--shadow-neon-md);
+}
+
+.btn-auth-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-neon-lg);
+}
+
+.btn-auth-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(10, 14, 10, 0.3);
+  border-top-color: #0a0e0a;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Auth Divider - REMOVED */
+.auth-divider {
+  display: none;
+}
+
+/* Google Button - REMOVED */
+.btn-google {
+  display: none;
+}
+
+/* Auth Switch */
+.auth-switch {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-border);
+}
+
+.auth-switch p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.auth-switch button {
+  background: none;
+  border: none;
+  color: var(--color-accent-yellow);
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 0.5rem;
+  transition: color 0.2s ease;
+}
+
+.auth-switch button:hover {
+  color: var(--color-accent-lime);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .auth-container {
+    padding: 2rem 1.5rem;
+  }
+
+  .auth-header h2 {
+    font-size: 1.5rem;
+  }
+}
+
