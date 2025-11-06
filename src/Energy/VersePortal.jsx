@@ -1,21 +1,19 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from "react-router-dom";
 import { 
   Menu, X, ChevronRight, Sun, Wind, Battery, Zap, TrendingUp, Globe, 
   Activity, AlertTriangle, BarChart3, Database, Leaf, Users, Settings,
-  Search, Filter, ArrowRight, Play, BookOpen, MessageSquare, Bell,
-  Code, MapPin, LineChart, Shield, Cpu, Cloud, Box, GitBranch, 
-  LogOut, User, LayoutDashboard
+  Search, Filter, ArrowRight, Play, Bell, Code, MapPin, LineChart, Shield, 
+  Cpu, Cloud, Box, GitBranch, LogOut, User, LayoutDashboard, MessageSquare
 } from 'lucide-react';
-
 import './VersePortal.css';
-import Auth from '../components/Auth'; 
-// ↓ NEW FIREBASE IMPORTS (Ensure '../config/firebase' exports 'auth' and 'db')
+import Auth from '../components/Auth';
+import FeatureDocsModal from "../components/FeatureDocsModal"; // ✅ Added import
 import { auth, db } from '../config/firebase';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from "firebase/firestore";
-// Added onAuthStateChanged for persistence
-// ↑ NEW FIREBASE IMPORTS
+
+
 
 
 // Complete feature data with all 17 features (Keep this section unchanged)
@@ -340,7 +338,7 @@ const SearchModal = ({ isOpen, onClose, features }) => {
     );
 };
 
-const FeatureModal = ({ feature, isOpen, onClose }) => {
+const FeatureModal = ({ feature, isOpen, onClose,onDocs }) => {
   if (!isOpen || !feature) return null;
 
   // ✅ Add here
@@ -421,21 +419,23 @@ const FeatureModal = ({ feature, isOpen, onClose }) => {
 
           <div className="modal-actions">
                   <button 
-        className="btn-primary"
-        onClick={() => window.open(feature.demoUrl, "_blank")} // ✅ opens in new tab
-      >
-        <Play size={18} />
-        Try Demo
-      </button>
+    className="btn-primary"
+    onClick={() => window.open(feature.demoUrl, "_blank")}
+  >
+    <Play size={18} /> Try Demo
+  </button>
 
-            <button className="btn-secondary">
-              <BookOpen size={18} />
-              Documentation
-            </button>
-            <button className="btn-secondary">
-              <Code size={18} />
-              API Access
-            </button>
+  <button 
+  onClick={() => onDocs(feature)}   
+  className="view-docs-btn"
+>
+  📘 View Documentation
+</button>
+
+
+
+
+            
           </div>
         </div>
       </div>
@@ -491,6 +491,14 @@ const FeaturesSection = () => {
   const [activeCategory, setActiveCategory] = useState('All Features');
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [showDocs, setShowDocs] = useState(false);  // ✅ Add this
+  const [docsFeature, setDocsFeature] = useState(null);  // ✅ Add this
+const openDocs = (feature) => {
+  setDocsFeature(feature);
+  setShowDocs(true);
+  // setShowModal(false);
+};
+
 
   const categories = ['All Features', ...Object.keys(featureCategories)];
   
@@ -553,7 +561,17 @@ const FeaturesSection = () => {
         feature={selectedFeature}
         isOpen={showModal}
         onClose={() => setShowModal(false)}
+          onDocs={openDocs}  // ✅ Pass handler down
       />
+     {showDocs && docsFeature && (
+  <FeatureDocsModal
+    feature={docsFeature.title}
+    onClose={() => { setShowDocs(false); setDocsFeature(null); }}
+  />
+)}
+
+
+
     </>
   );
 };

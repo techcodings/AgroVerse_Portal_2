@@ -92,6 +92,138 @@ body::before {
   pointer-events: none;
   z-index: -1;
 }
+.docs-modal {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%) scale(0.95);
+  width: 80%;
+  max-width: 900px;
+  background: rgba(20, 26, 20, 0.96);
+  border: 2px solid rgba(244,255,78,0.3);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px rgba(244,255,78,0.3);
+  animation: slideDown 0.4s ease forwards;
+  overflow-y: auto;
+  z-index: 1200;
+}
+@keyframes slideDown {
+  from {opacity: 0; transform: translate(-50%, -20%) scale(0.95);}
+  to {opacity: 1; transform: translate(-50%, 0) scale(1);}
+}
+.docs-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px) saturate(160%);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* keep top alignment */
+  padding-top: 1rem; /* reduced space */
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.docs-modal {
+  background: rgba(10, 20, 10, 0.94);
+  border: 1.5px solid rgba(186, 255, 55, 0.4);
+  border-radius: 1rem;
+  box-shadow: 0 0 25px rgba(186, 255, 55, 0.25);
+  color: #eaffd5;
+  width: 92%;
+  max-width: 850px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideDown 0.4s ease forwards;
+  font-family: "Inter", sans-serif;
+  margin-top: 0; /* ensures top display */
+}
+
+@media (max-width: 768px) {
+  .docs-backdrop {
+    align-items: flex-start;
+    padding-top: 0.5rem; /* tighter top spacing */
+  }
+
+  .docs-modal {
+    width: 95%;
+    max-height: 88vh;
+    border-radius: 0.75rem;
+    margin-top: 0.25rem;
+  }
+}
+
+
+.docs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(186, 255, 55, 0.3);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.docs-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1rem;
+}
+
+.tab-btn {
+  background: rgba(186, 255, 55, 0.12);
+  border: 1px solid rgba(186, 255, 55, 0.3);
+  color: #eaffd5;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.9rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+.tab-btn:hover {
+  background: rgba(186, 255, 55, 0.25);
+}
+.tab-active {
+  background: rgba(186, 255, 55, 0.35);
+  border-color: rgba(186, 255, 55, 0.6);
+  color: #fff;
+  font-weight: 600;
+}
+
+.docs-content {
+  line-height: 1.7;
+  font-size: 0.95rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.docs-content ul {
+  margin-left: 1.5rem;
+  list-style-type: disc;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeIn {
+  from {opacity:0; transform:scale(0.95);}
+  to   {opacity:1; transform:scale(1);}
+}
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out forwards;
+}
+
+button[aria-label="Close"] {
+  transition: all 0.2s ease-in-out;
+}
+button[aria-label="Close"]:hover {
+  text-shadow: 0 0 10px rgba(186, 255, 55, 0.7);
+}
 
 @keyframes pulseGlow {
   0%, 100% { opacity: 0.6; transform: scale(1); }
@@ -146,9 +278,97 @@ body::before {
   transform: translateY(-2px) scale(1.02);
   box-shadow: var(--shadow-neon-lg);
 }
+@keyframes pulseGlow {
+  0% {
+    text-shadow: 0 0 6px rgba(186, 255, 55, 0.6),
+                 0 0 12px rgba(186, 255, 55, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 12px rgba(186, 255, 55, 0.9),
+                 0 0 24px rgba(186, 255, 55, 0.4);
+  }
+  100% {
+    text-shadow: 0 0 6px rgba(186, 255, 55, 0.6),
+                 0 0 12px rgba(186, 255, 55, 0.3);
+  }
+}
+/* ===============================
+   ⚡ View Documentation Button Style
+=============================== */
+.view-docs-btn {
+  background: linear-gradient(90deg, #baff37 0%, #d7ff63 100%);
+  color: #061006;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 10px rgba(186, 255, 55, 0.5),
+              inset 0 0 6px rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.view-docs-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 0 18px rgba(200, 255, 60, 0.8),
+              0 0 30px rgba(186, 255, 55, 0.4);
+  background: linear-gradient(90deg, #e6ff6a 0%, #baff37 100%);
+}
 
 .btn-primary:hover::before {
   left: 100%;
+}
+/* ==========================
+   ⚡ Feature Documentation Modal
+========================== */
+.docs-modal {
+  backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid rgba(186, 255, 55, 0.35);
+  border-radius: 16px;
+  animation: fadeIn 0.3s ease;
+  box-shadow: 0 0 20px rgba(186, 255, 55, 0.3),
+              0 0 40px rgba(186, 255, 55, 0.1);
+}
+
+.docs-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 12px;
+}
+
+.tab-btn {
+  border: 1px solid rgba(186, 255, 55, 0.4);
+  background: rgba(186, 255, 55, 0.08);
+  color: #d9ffb0;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  background: rgba(186, 255, 55, 0.15);
+  transform: scale(1.05);
+}
+
+.tab-active {
+  background: linear-gradient(90deg, #baff37 0%, #e6ff78 100%);
+  color: #061006;
+  box-shadow: 0 0 10px rgba(186, 255, 55, 0.5);
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .btn-primary.large {
