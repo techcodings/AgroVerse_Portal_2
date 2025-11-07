@@ -4,7 +4,7 @@ import {
   Menu, X, ChevronRight, Sun, Wind, Battery, Zap, TrendingUp, Globe, 
   Activity, AlertTriangle, BarChart3, Database, Leaf, Users, Settings,
   Search, Filter, ArrowRight, Play, Bell, Code, MapPin, LineChart, Shield, 
-  Cpu, Cloud, Box, GitBranch, LogOut, User, LayoutDashboard, MessageSquare
+  Cpu, Cloud, Box, GitBranch, LogOut, User, LayoutDashboard, MessageSquare, Download
 } from 'lucide-react';
 import './VersePortal.css';
 import Auth from '../components/Auth';
@@ -148,7 +148,7 @@ const Header = ({ mobileMenuOpen, setMobileMenuOpen, setShowSearch, onUserButton
               <Zap className="icon" />
             </div>
             <div className="logo-text">
-              <h1>EnergyVerse 2.0</h1>
+              <h1>EnergyVerse </h1>
               <p>AI-Powered Energy Platform</p>
             </div>
           </div>
@@ -156,7 +156,7 @@ const Header = ({ mobileMenuOpen, setMobileMenuOpen, setShowSearch, onUserButton
           <nav className="header-nav">
             <a href="#features">Features</a>
             <a href="#capabilities">Capabilities</a>
-            <a href="#integration">Integration</a>
+           
 <Link
   to="/docs"
   className="px-4 py-2 rounded-md font-semibold text-[#caff37] 
@@ -213,12 +213,20 @@ const Header = ({ mobileMenuOpen, setMobileMenuOpen, setShowSearch, onUserButton
   );
 };
 
-const Hero = ({ onGetStarted }) => {
+const Hero = () => {
+  // ✅ Smooth scroll to Features section
+  const scrollToFeatures = () => {
+    const section = document.querySelector("#features");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   return (
     <section className="hero">
       <div className="hero-bg"></div>
       <div className="hero-particles"></div>
-      
+
       <div className="hero-content">
         <div className="hero-badge">
           <span className="pulse-dot"></span>
@@ -237,16 +245,21 @@ const Hero = ({ onGetStarted }) => {
         </p>
 
         <div className="hero-buttons">
-          {/* ↓ CHANGED TO NEW GLITCH BUTTON STYLE */}
-          <button onClick={onGetStarted} className="btn-glitch large">
+          {/* ✅ Explore button now only scrolls — never logs out */}
+          <button onClick={scrollToFeatures} className="btn-glitch large">
             <span>Explore Platform</span>
             <ArrowRight size={20} />
           </button>
-          {/* ↑ END CHANGE */}
-          <button className="btn-secondary large">
-            <Play size={20} />
-            <span>Watch Demo</span>
-          </button>
+
+          <a
+            href="/app/app-release.apk"
+            download
+            className="btn-download large"
+            rel="noopener"
+          >
+            <Download size={20} />
+            <span>Download Android App</span>
+          </a>
         </div>
 
         <div className="hero-stats">
@@ -285,6 +298,7 @@ const Hero = ({ onGetStarted }) => {
     </section>
   );
 };
+
 const SearchModal = ({ isOpen, onClose, features }) => {
     const [searchQuery, setSearchQuery] = useState('');
     
@@ -646,7 +660,7 @@ const Footer = () => {
               <div className="logo-icon">
                 <Zap className="icon" />
               </div>
-              <span>EnergyVerse 2.0</span>
+              <span>EnergyVerse</span>
             </div>
             <p className="footer-description">
               AI-powered renewable energy and EV management platform for a sustainable future.
@@ -663,23 +677,21 @@ const Footer = () => {
             <h3>Platform</h3>
             <ul>
               <li><a href="#features">All Features</a></li>
-              <li><a href="#docs">Documentation</a></li>
-              <li><a href="#api">API Reference</a></li>
-              <li><a href="#pricing">Pricing</a></li>
-              <li><a href="#status">System Status</a></li>
+              <li><Link
+  to="/docs"
+  className="px-4 py-2 rounded-md font-semibold text-[#caff37] 
+             border border-[#baff37]/40 hover:border-[#eaff91]/70
+             hover:text-[#eaff91] hover:shadow-[0_0_12px_rgba(186,255,55,0.6)]
+             bg-transparent transition-all duration-300 ease-in-out
+             hover:bg-[#baff37]/10"
+>
+   Documentation
+</Link></li>
+
             </ul>
           </div>
 
-          <div className="footer-column">
-            <h3>Resources</h3>
-            <ul>
-              <li><a href="#blog">Blog</a></li>
-              <li><a href="#case-studies">Case Studies</a></li>
-              <li><a href="#tutorials">Tutorials</a></li>
-              <li><a href="#webinars">Webinars</a></li>
-              <li><a href="#support">Support Center</a></li>
-            </ul>
-          </div>
+          
 
           <div className="footer-column">
             <h3>Company</h3>
@@ -705,7 +717,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>© 2025 EnergyVerse 2.0. All rights reserved. Built with 💚 for a sustainable future.</p>
+          <p>© 2025 EnergyVerse. All rights reserved. Built with 💚 for a sustainable future.</p>
           <div className="footer-links">
             <a href="#terms">Terms of Service</a>
             <span>•</span>
@@ -795,36 +807,43 @@ const handleAuthSuccess = async (userData) => {
     window.addEventListener('click', handleOutsideClick);
     return () => window.removeEventListener('click', handleOutsideClick);
   }, [showUserMenu]);
-
+// 🔒 If user is not logged in, show only the Auth page
+if (!user) {
   return (
-    <div className="app">
-      <Header 
-        mobileMenuOpen={mobileMenuOpen} 
-        setMobileMenuOpen={setMobileMenuOpen}
-        setShowSearch={setShowSearch}
-        onUserButtonClick={handleUserButtonClick} // Pass the main handler
-        user={user}
-        showUserMenu={showUserMenu} // Pass state for dropdown
-        setShowUserMenu={setShowUserMenu} // Pass setter for dropdown
+    <div className="auth-only-screen">
+      <Auth 
+        onClose={() => setShowAuth(false)}
+        onAuthSuccess={handleAuthSuccess}
       />
-      <Hero onGetStarted={handleUserButtonClick} />
-      <FeaturesSection />
-      <CapabilitiesSection />
-      <Footer />
-      
-      <SearchModal 
-        isOpen={showSearch}
-        onClose={() => setShowSearch(false)}
-        features={allFeatures}
-      />
-
-      {/* Auth Modal */}
-      {showAuth && (
-        <Auth 
-          onClose={() => setShowAuth(false)}
-          onAuthSuccess={handleAuthSuccess}
-        />
-      )}
     </div>
   );
+}
+
+// ✅ Once logged in, show the full website
+return (
+  <div className="app">
+    <Header 
+      mobileMenuOpen={mobileMenuOpen} 
+      setMobileMenuOpen={setMobileMenuOpen}
+      setShowSearch={setShowSearch}
+      onUserButtonClick={handleUserButtonClick}
+      user={user}
+      showUserMenu={showUserMenu}
+      setShowUserMenu={setShowUserMenu}
+    />
+
+    <Hero />
+
+    <FeaturesSection />
+    <CapabilitiesSection />
+    <Footer />
+    
+    <SearchModal 
+      isOpen={showSearch}
+      onClose={() => setShowSearch(false)}
+      features={allFeatures}
+    />
+  </div>
+);
+
 }
