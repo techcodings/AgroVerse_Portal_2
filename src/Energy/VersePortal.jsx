@@ -348,10 +348,10 @@ const SearchModal = ({ isOpen, onClose, features }) => {
     );
 };
 
-const FeatureModal = ({ feature, isOpen, onClose,onDocs }) => {
-  if (!isOpen || !feature) return null;
+const FeatureModal = ({ feature, isOpen, onClose }) => {
+  const navigate = useNavigate(); // ✅ Hook 1
 
-  // ✅ Add here
+  // ✅ Hook 2 (must come before any return)
   useEffect(() => {
     if (isOpen) {
       window.scrollTo(0, 0);
@@ -361,16 +361,24 @@ const FeatureModal = ({ feature, isOpen, onClose,onDocs }) => {
     }
   }, [isOpen]);
 
-  const Icon = feature.icon;
+  // ✅ Navigation handler
+  const handleViewDocs = () => {
+    onClose(); // close modal first
+    navigate("/docs", { state: { feature: feature.title } });
+  };
 
+  // ✅ Now safe to return early
+  if (!isOpen || !feature) return null;
+
+  const Icon = feature.icon;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
-      <div className="feature-modal" onClick={e => e.stopPropagation()}>
+      <div className="feature-modal" onClick={(e) => e.stopPropagation()}>
         <button className="modal-close" onClick={onClose}>
           <X size={24} />
         </button>
-        
+
         <div className="modal-header">
           <div className={`modal-icon ${feature.color}`}>
             <Icon size={32} />
@@ -428,30 +436,23 @@ const FeatureModal = ({ feature, isOpen, onClose,onDocs }) => {
           </div>
 
           <div className="modal-actions">
-                  <button 
-    className="btn-primary"
-    onClick={() => window.open(feature.demoUrl, "_blank")}
-  >
-    <Play size={18} /> Try Demo
-  </button>
+            <button
+              className="btn-primary"
+              onClick={() => window.open(feature.demoUrl, "_blank")}
+            >
+              <Play size={18} /> Try Demo
+            </button>
 
-  <button 
-  onClick={() => onDocs(feature)}   
-  className="view-docs-btn"
->
-  📘 View Documentation
-</button>
-
-
-
-
-            
+            <button onClick={handleViewDocs} className="view-docs-btn">
+              📘 View Documentation
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
 };
+
 
 const FeatureCard = ({ feature, index, onClick }) => {
   const Icon = feature.icon;
@@ -501,14 +502,6 @@ const FeaturesSection = () => {
   const [activeCategory, setActiveCategory] = useState('All Features');
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [showDocs, setShowDocs] = useState(false);  // ✅ Add this
-  const [docsFeature, setDocsFeature] = useState(null);  // ✅ Add this
-const openDocs = (feature) => {
-  setDocsFeature(feature);
-  setShowDocs(true);
-  // setShowModal(false);
-};
-
 
   const categories = ['All Features', ...Object.keys(featureCategories)];
   
@@ -530,9 +523,9 @@ const openDocs = (feature) => {
               <Filter size={16} />
               <span>Platform Features</span>
             </div>
-            {/* ↓ ADDED data-text FOR GLITCH ANIMATION */}
-            <h2 data-text="Comprehensive Energy Intelligence Suite">Comprehensive Energy Intelligence Suite</h2>
-            {/* ↑ END ADDED */}
+            <h2 data-text="Comprehensive Energy Intelligence Suite">
+              Comprehensive Energy Intelligence Suite
+            </h2>
             <p>
               17 advanced AI-powered features for complete renewable energy management, 
               from solar monitoring to grid optimization and EV fleet management
@@ -571,17 +564,7 @@ const openDocs = (feature) => {
         feature={selectedFeature}
         isOpen={showModal}
         onClose={() => setShowModal(false)}
-          onDocs={openDocs}  // ✅ Pass handler down
       />
-     {showDocs && docsFeature && (
-  <FeatureDocsModal
-    feature={docsFeature.title}
-    onClose={() => { setShowDocs(false); setDocsFeature(null); }}
-  />
-)}
-
-
-
     </>
   );
 };
