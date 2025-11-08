@@ -1,5 +1,6 @@
 /* ======================================================
    ⚡ ENERGYVERSE ADMIN DASHBOARD — NEON YELLOW+GREENISH UI
+   (Gemini Enhanced Version)
    ====================================================== */
 
 :root {
@@ -13,16 +14,27 @@
   --text: #eaffdf;
   --text-dim: #b3ff9f;
   --red: #ff5a5a;
-  --shadow-neon: 0 0 15px rgba(200, 255, 90, 0.25);
+  
+  /* --- Enhanced Shadows & Transitions --- */
+  --shadow-neon-sm: 0 0 8px rgba(200, 255, 90, 0.2);
+  --shadow-neon-md: 0 0 15px rgba(200, 255, 90, 0.35);
+  --shadow-neon-lg: 0 0 25px rgba(200, 255, 90, 0.5);
+  --text-shadow-neon: 0 0 8px rgba(202, 255, 55, 0.7);
+  
+  --transition-fast: 0.2s ease-out;
+  --transition-normal: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 /* Root Layout */
 .admin-wrapper {
   display: flex;
   min-height: 100vh;
-  background: radial-gradient(900px 700px at 20% 0%, #06140a, #010a04);
+  /* Updated gradient for more depth */
+  background: radial-gradient(1200px 900px at 20% 0%, #06140a, #010a04);
   color: var(--text);
   font-family: "Inter", sans-serif;
+  /* NEW: Pulsing background effect */
+  animation: pulseBackground 15s ease-in-out infinite;
 }
 
 /* Sidebar */
@@ -35,6 +47,7 @@
   flex-direction: column;
   box-shadow: inset -2px 0 10px rgba(150, 255, 80, 0.1);
   backdrop-filter: blur(12px);
+  transition: width var(--transition-normal); /* For potential collapse */
 }
 
 .sidebar-title {
@@ -44,7 +57,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  text-shadow: 0 0 10px var(--accent-glow);
+  text-shadow: var(--text-shadow-neon);
   margin-bottom: 24px;
   animation: fadeUp 0.5s ease;
 }
@@ -63,7 +76,23 @@
   cursor: pointer;
   opacity: 0.8;
   color: var(--text-dim);
-  transition: all 0.25s ease;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+/* NEW: Active/Hover marker */
+.sidebar-menu li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 3px;
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  transform: translateX(-100%);
+  transition: transform var(--transition-fast);
 }
 
 .sidebar-menu li:hover,
@@ -73,7 +102,12 @@
   color: var(--accent);
   opacity: 1;
   box-shadow: 0 0 12px rgba(190, 255, 90, 0.2);
-  transform: translateX(4px);
+  transform: translateX(0); /* Remove old transform */
+}
+
+.sidebar-menu li:hover::before,
+.active-menu::before {
+  transform: translateX(0);
 }
 
 .logout-btn {
@@ -89,10 +123,10 @@
   gap: 6px;
   color: #fff;
   box-shadow: 0 0 12px rgba(255, 90, 90, 0.25);
-  transition: 0.3s ease;
+  transition: all var(--transition-normal);
 }
 .logout-btn:hover {
-  transform: scale(1.03);
+  transform: scale(1.03) translateY(-2px);
   box-shadow: 0 0 20px rgba(255, 90, 90, 0.4);
 }
 
@@ -101,6 +135,8 @@
   flex: 1;
   padding: 28px;
   animation: fadeIn 0.6s ease;
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 /* Header */
@@ -109,11 +145,13 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 16px;
+  flex-wrap: wrap; /* For mobile */
+  gap: 16px;
 }
 
 .admin-header h1 {
   color: var(--accent);
-  text-shadow: 0 0 12px var(--accent-glow);
+  text-shadow: var(--text-shadow-neon);
   font-size: 1.8rem;
   font-weight: 700;
 }
@@ -126,15 +164,17 @@
   font-weight: 700;
   color: #041204;
   cursor: pointer;
-  box-shadow: var(--shadow-neon);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow-neon-md);
+  transition: all var(--transition-normal);
   display: flex;
   align-items: center;
   gap: 8px;
+  /* NEW: Breathing glow */
+  animation: neonBreathe 4s ease-in-out infinite;
 }
 .export-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 20px var(--accent-glow);
+  transform: scale(1.03) translateY(-2px);
+  box-shadow: var(--shadow-neon-lg);
 }
 
 /* Banner */
@@ -164,14 +204,23 @@
   border-radius: 14px;
   text-align: center;
   padding: 20px;
-  box-shadow: var(--shadow-neon);
-  transition: all 0.3s ease;
-  animation: fadeUp 0.4s ease;
+  box-shadow: var(--shadow-neon-md);
+  transition: all var(--transition-normal);
+  animation: fadeUp 0.4s ease-out;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
+/* NEW: Stagger animation */
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+
 .stat-card:hover {
   transform: translateY(-4px);
   border-color: var(--accent);
-  box-shadow: 0 0 20px var(--accent-glow);
+  box-shadow: var(--shadow-neon-lg);
 }
 .stat-card svg {
   color: var(--accent);
@@ -186,6 +235,7 @@
   color: var(--accent);
   margin-top: 4px;
   font-weight: 700;
+  text-shadow: var(--text-shadow-neon);
 }
 
 /* Search */
@@ -198,7 +248,13 @@
   border-radius: 10px;
   border: 1px solid var(--border);
   margin: 24px 0;
-  box-shadow: var(--shadow-neon);
+  box-shadow: var(--shadow-neon-sm);
+  transition: all var(--transition-normal);
+}
+/* NEW: Focus glow */
+.search-row:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-neon-lg);
 }
 .search-row input {
   border: none;
@@ -206,6 +262,7 @@
   color: var(--text);
   width: 100%;
   outline: none;
+  font-size: 1rem;
 }
 .search-row input::placeholder {
   color: rgba(190, 255, 150, 0.4);
@@ -217,8 +274,10 @@
   border-radius: 14px;
   border: 1px solid var(--border);
   overflow: hidden;
-  box-shadow: var(--shadow-neon);
-  animation: fadeUp 0.5s ease;
+  box-shadow: var(--shadow-neon-md);
+  animation: fadeUp 0.5s ease 0.3s; /* Delay to load after cards */
+  animation-fill-mode: forwards;
+  opacity: 0;
 }
 
 table {
@@ -236,17 +295,43 @@ th {
   text-shadow: 0 0 6px var(--accent-glow);
 }
 
+tr {
+  position: relative; /* For scan-line effect */
+  overflow: hidden;
+}
+
 td {
   padding: 12px;
   border-bottom: 1px solid rgba(150, 255, 80, 0.1);
   color: var(--text);
   font-size: 0.9rem;
+  transition: all var(--transition-fast);
 }
 
-tr:hover td {
-  background: rgba(150, 255, 80, 0.05);
-  transition: 0.2s ease;
+/* NEW: Scan-line hover effect */
+tr::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(202, 255, 55, 0.1), transparent);
+  background-size: 200% 100%;
+  transform: translateX(-100%);
+  pointer-events: none;
+  transition: transform 0.4s ease-out, opacity 0.4s;
+  opacity: 0;
 }
+tr:hover::after {
+  transform: translateX(100%);
+  opacity: 1;
+  transition: transform 0.8s var(--transition-normal), opacity 0.1s;
+}
+tr:hover td {
+  background: rgba(150, 255, 80, 0.03); /* Keep a subtle bg change */
+}
+
 
 /* Role Tags */
 .role-tag {
@@ -259,7 +344,7 @@ tr:hover td {
 .role-tag.admin {
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   color: #061006;
-  box-shadow: 0 0 10px var(--accent-glow);
+  box-shadow: var(--shadow-neon-sm);
 }
 .role-tag.user {
   background: rgba(255, 255, 255, 0.08);
@@ -278,11 +363,11 @@ tr:hover td {
   display: flex;
   align-items: center;
   gap: 6px;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
 }
 .role-btn:hover {
   background: rgba(190, 255, 90, 0.1);
-  box-shadow: 0 0 14px var(--accent-glow);
+  box-shadow: var(--shadow-neon-lg);
   transform: translateY(-2px);
 }
 
@@ -304,11 +389,11 @@ tr:hover td {
   padding: 6px 12px;
   color: var(--accent);
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all var(--transition-normal);
 }
 .pagination button:hover {
   background: rgba(190, 255, 90, 0.1);
-  box-shadow: 0 0 10px var(--accent-glow);
+  box-shadow: var(--shadow-neon-lg);
 }
 
 /* Empty State */
@@ -331,27 +416,79 @@ tr:hover td {
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+@keyframes pulseBackground {
+  0%, 100% { background-position: 20% 0%; opacity: 0.9; }
+  50% { background-position: 25% 5%; opacity: 1; }
+}
+@keyframes neonBreathe {
+  0%, 100% { box-shadow: var(--shadow-neon-md); }
+  50% { box-shadow: var(--shadow-neon-lg); }
+}
+
 
 /* Responsive */
 @media (max-width: 768px) {
   .admin-wrapper {
     flex-direction: column;
+    height: auto; /* Allow content to flow */
+  }
+  .admin-main {
+    max-height: none; /* Allow main to scroll */
+    padding: 16px;
   }
   .admin-sidebar {
     width: 100%;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     border-right: none;
     border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+  }
+  .sidebar-title {
+    margin-bottom: 0;
   }
   .sidebar-menu {
     flex-direction: row;
-    gap: 12px;
+    gap: 8px; /* Tighter gap for mobile */
   }
-  .admin-main {
-    padding: 16px;
+  .sidebar-menu li {
+    padding: 8px 10px;
   }
+  /* NEW: Responsive fix for sidebar marker */
+  .sidebar-menu li::before {
+    display: none; /* Hide side marker */
+  }
+  .sidebar-menu li::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: var(--accent);
+    box-shadow: 0 0 10px var(--accent-glow);
+    transition: width var(--transition-fast);
+  }
+  .sidebar-menu li:hover::after,
+  .active-menu::after {
+    width: 80%;
+  }
+  .logout-btn {
+    margin-top: 0;
+    padding: 8px 10px;
+  }
+  
   .stat-grid {
     flex-direction: column;
+  }
+  .table-wrapper {
+    /* On mobile, table might need horizontal scroll */
+    overflow-x: auto;
+  }
+  .pagination {
+    flex-direction: column;
+    gap: 12px;
   }
 }

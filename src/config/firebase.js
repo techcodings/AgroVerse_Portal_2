@@ -4,15 +4,14 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyATlbYgcim7EdgiS3fnG8OOaz0BTLFr-pQ",
-  authDomain: "energyverse-628d4.firebaseapp.com",
-  projectId: "energyverse-628d4",
-  storageBucket: "energyverse-628d4.firebasestorage.app",
-  messagingSenderId: "17456664303",
-  appId: "1:17456664303:web:aa236197729b960639551a",
-  measurementId: "G-4B8RRR6W61"
+  apiKey: "AIzaSyCortMHOXxR2hMvwnbMmz8AaBrQNeM0JJ0",
+  authDomain: "agroverse-5bcf9.firebaseapp.com",
+  projectId: "agroverse-5bcf9",
+  storageBucket: "agroverse-5bcf9.firebasestorage.app",
+  messagingSenderId: "661133143367",
+  appId: "1:661133143367:web:4f65a996be0852d08e7062",
+  measurementId: "G-VMJMXXTNTR"
 };
 
 // Initialize Firebase

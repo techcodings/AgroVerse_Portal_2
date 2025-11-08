@@ -1,11 +1,12 @@
 /* ========================================
-   Auth.css (Neon Circuit Theme)
+   Auth.css (Enhanced Neon Circuit Theme)
    Matches VersePortal.css
+   (Gemini Enhanced Version)
    ======================================== */
 
-/* --- Import Root Variables --- */
-/* (This assumes VersePortal.css is loaded, but we'll redefine for safety) */
+/* --- Enhanced Root Variables --- */
 :root {
+  /* --- Color Palette --- */
   --color-bg-primary: #0a0e0a;
   --color-bg-secondary: #141a14;
   --color-bg-tertiary: #1f2a1f;
@@ -20,14 +21,76 @@
   --color-border-light: #3d5a3d;
   --gradient-primary: linear-gradient(135deg, var(--color-accent-yellow), var(--color-accent-lime), var(--color-accent-green));
   --gradient-secondary: linear-gradient(135deg, var(--color-accent-neon), var(--color-accent-chartreuse));
+
+  /* --- Sizing --- */
   --border-radius-sm: 0.5rem;
   --border-radius-md: 0.75rem;
   --border-radius-lg: 1rem;
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --shadow-neon-sm: 0 0 10px rgba(244, 255, 78, 0.2), 0 0 20px rgba(190, 242, 45, 0.1);
-  --shadow-neon-md: 0 4px 20px rgba(244, 255, 78, 0.3), 0 0 30px rgba(190, 242, 45, 0.2);
-  --shadow-neon-lg: 0 8px 32px rgba(244, 255, 78, 0.4), 0 0 60px rgba(190, 242, 45, 0.3);
+  
+  /* --- Enhanced Transitions & Shadows --- */
+  --transition-fast: 0.2s ease-out;
+  --transition-normal: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --shadow-neon-sm: 0 0 8px rgba(244, 255, 78, 0.3), 0 0 16px rgba(190, 242, 45, 0.2);
+  --shadow-neon-md: 0 2px 16px rgba(244, 255, 78, 0.4), 0 0 24px rgba(190, 242, 45, 0.3);
+  --shadow-neon-lg: 0 4px 24px rgba(244, 255, 78, 0.5), 0 0 48px rgba(190, 242, 45, 0.4);
+  --text-shadow-neon: 0 0 8px rgba(204, 255, 0, 0.7), 0 0 16px rgba(244, 255, 78, 0.5);
+}
+
+/* --- Keyframes --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes neonBreathe {
+  0%, 100% { box-shadow: var(--shadow-neon-md); transform: scale(1); }
+  50% { box-shadow: var(--shadow-neon-lg); transform: scale(1.03); }
+}
+
+/* NEW: Pulsing glow for the auth modal container */
+@keyframes authGlowPulse {
+  0%, 100% {
+    border-color: rgba(244, 255, 78, 0.3);
+    box-shadow: var(--shadow-neon-md);
+  }
+  50% {
+    border-color: rgba(244, 255, 78, 0.7);
+    box-shadow: var(--shadow-neon-lg);
+  }
+}
+
+/* NEW: Pulsing glow for alerts */
+@keyframes pulseAlertGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(0,0,0,0.1); }
+  50% { box-shadow: 0 0 12px var(--glow-color, rgba(255, 107, 107, 0.5)); }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Auth Overlay */
@@ -38,18 +101,12 @@
   backdrop-filter: blur(8px);
   z-index: 1000;
   display: flex;
-  /* align-items: center; <-- This was causing the issue */
-  align-items: flex-start; /* <-- This is the fix */
+  align-items: flex-start; /* Fix for top alignment */
   justify-content: center;
   padding: 1rem;
-  padding-top: 10vh; /* <-- Added padding to push it down from the top */
+  padding-top: 10vh; /* Push down from the top */
   animation: fadeIn 0.3s ease;
-  overflow-y: auto; /* Added to ensure scrolling if content is long */
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  overflow-y: auto;
 }
 
 /* Auth Container */
@@ -63,20 +120,10 @@
   max-width: 450px;
   width: 100%;
   position: relative;
-  animation: slideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-origin: top;
-  margin-bottom: auto; /* Added to help with positioning */
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  margin-bottom: auto;
+  /* ENHANCED: Added pulse animation */
+  animation: slideUp 0.4s var(--transition-normal), authGlowPulse 4s ease-in-out infinite;
 }
 
 .auth-close {
@@ -94,7 +141,7 @@
   justify-content: center;
   cursor: pointer;
   font-size: 24px;
-  transition: all 0.2s ease;
+  transition: all var(--transition-normal); /* ENHANCED */
 }
 
 .auth-close:hover {
@@ -121,18 +168,8 @@
   margin: 0 auto 1.5rem;
   color: #0a0e0a;
   box-shadow: var(--shadow-neon-md);
-  animation: logoPulse 3s ease-in-out infinite;
-}
-
-@keyframes logoPulse {
-  0%, 100% { 
-    transform: scale(1); 
-    box-shadow: var(--shadow-neon-md);
-  }
-  50% { 
-    transform: scale(1.1); 
-    box-shadow: var(--shadow-neon-lg);
-  }
+  /* ENHANCED: Swapped to new breathe animation */
+  animation: neonBreathe 3s ease-in-out infinite;
 }
 
 .auth-header h2 {
@@ -140,6 +177,8 @@
   font-weight: 700;
   color: var(--color-text-primary);
   margin-bottom: 0.5rem;
+  /* ENHANCED: Added text glow */
+  text-shadow: var(--text-shadow-neon);
 }
 
 .auth-header p {
@@ -156,31 +195,23 @@
   border-radius: var(--border-radius-sm);
   margin-bottom: 1.5rem;
   font-size: 0.9rem;
-  animation: slideDown 0.3s ease;
   border: 1px solid transparent;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  /* ENHANCED: Added pulse animation */
+  animation: slideDown 0.3s ease, pulseAlertGlow 2.5s ease-in-out infinite;
 }
 
 .auth-alert.error {
   background: rgba(255, 107, 107, 0.1);
   border-color: rgba(255, 107, 107, 0.3);
   color: #fca5a5;
+  --glow-color: rgba(255, 107, 107, 0.5); /* NEW: Variable for pulse */
 }
 
 .auth-alert.success {
   background: rgba(190, 242, 45, 0.1);
   border-color: rgba(190, 242, 45, 0.3);
   color: var(--color-accent-lime);
+  --glow-color: rgba(190, 242, 45, 0.5); /* NEW: Variable for pulse */
 }
 
 /* Auth Form */
@@ -212,14 +243,15 @@
   border-radius: var(--border-radius-sm);
   color: var(--color-text-primary);
   font-size: 0.95rem;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast); /* ENHANCED */
 }
 
 .form-group input:focus {
   outline: none;
   border-color: var(--color-accent-yellow);
   background: var(--color-bg-secondary);
-  box-shadow: 0 0 10px rgba(244, 255, 78, 0.3);
+  /* ENHANCED: Upgraded shadow */
+  box-shadow: var(--shadow-neon-md);
 }
 
 .form-group input::placeholder {
@@ -248,7 +280,7 @@
   padding: 0.5rem;
   display: flex;
   align-items: center;
-  transition: color 0.2s ease;
+  transition: color var(--transition-fast); /* ENHANCED */
 }
 
 .toggle-password:hover {
@@ -266,12 +298,13 @@
   color: var(--color-accent-yellow);
   font-size: 0.875rem;
   text-decoration: none;
-  transition: color 0.2s ease;
+  transition: all var(--transition-fast); /* ENHANCED */
 }
 
 .forgot-password:hover {
   color: var(--color-accent-lime);
   text-decoration: underline;
+  text-shadow: 0 0 8px var(--color-accent-lime);
 }
 
 /* Auth Buttons */
@@ -288,9 +321,11 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal); /* ENHANCED */
   margin-top: 0.5rem;
   box-shadow: var(--shadow-neon-md);
+  /* ENHANCED: Added breathe animation */
+  animation: neonBreathe 3s ease-in-out infinite;
 }
 
 .btn-auth-primary:hover:not(:disabled) {
@@ -302,6 +337,7 @@
   opacity: 0.6;
   cursor: not-allowed;
   box-shadow: none;
+  animation: none; /* Disable animation when disabled */
 }
 
 .loading-spinner {
@@ -311,12 +347,6 @@
   border-top-color: #0a0e0a;
   border-radius: 50%;
   animation: spin 0.6s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* Auth Divider - REMOVED */
@@ -349,12 +379,13 @@
   font-weight: 600;
   cursor: pointer;
   margin-left: 0.5rem;
-  transition: color 0.2s ease;
+  transition: all var(--transition-fast); /* ENHANCED */
 }
 
 .auth-switch button:hover {
   color: var(--color-accent-lime);
   text-decoration: underline;
+  text-shadow: 0 0 8px var(--color-accent-lime);
 }
 
 /* Responsive */
@@ -367,4 +398,3 @@
     font-size: 1.5rem;
   }
 }
-

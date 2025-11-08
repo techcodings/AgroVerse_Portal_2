@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { featureDocs } from "../data/featureDocs";
-import "../Energy/VersePortal.css";
+import "../AgroVerse/AgroPortal.css";
 
 export default function FeatureDocsModal({ feature, onClose }) {
   const data = featureDocs[feature];

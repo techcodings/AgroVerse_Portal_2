@@ -1,6 +1,7 @@
 /* ========================================
    EnergyVerse 2.0 - Neon Circuit Theme
    (Yellow/Green Animated Style)
+   (Gemini Enhanced Version)
    ======================================== */
 
 /* ========== 1. ROOT VARIABLES ========== */
@@ -40,14 +41,18 @@
   --border-radius-md: 0.75rem;
   --border-radius-lg: 1rem;
 
-  /* --- Transitions & Shadows --- */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-  --transition-slow: 0.5s ease;
+  /* --- Transitions & Shadows (ENHANCED) --- */
+  --transition-fast: 0.2s ease-out;
+  --transition-normal: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smoother bezier */
+  --transition-slow: 0.5s cubic-bezier(0.19, 1, 0.22, 1); /* Elastic out */
 
-  --shadow-neon-sm: 0 0 10px rgba(244, 255, 78, 0.2), 0 0 20px rgba(190, 242, 45, 0.1);
-  --shadow-neon-md: 0 4px 20px rgba(244, 255, 78, 0.3), 0 0 30px rgba(190, 242, 45, 0.2);
-  --shadow-neon-lg: 0 8px 32px rgba(244, 255, 78, 0.4), 0 0 60px rgba(190, 242, 45, 0.3);
+  /* Lighter, more 'electric' shadows */
+  --shadow-neon-sm: 0 0 8px rgba(244, 255, 78, 0.3), 0 0 16px rgba(190, 242, 45, 0.2);
+  --shadow-neon-md: 0 2px 16px rgba(244, 255, 78, 0.4), 0 0 24px rgba(190, 242, 45, 0.3);
+  --shadow-neon-lg: 0 4px 24px rgba(244, 255, 78, 0.5), 0 0 48px rgba(190, 242, 45, 0.4);
+  
+  /* New specific text-shadow for key headings */
+  --text-shadow-neon: 0 0 8px rgba(204, 255, 0, 0.7), 0 0 16px rgba(244, 255, 78, 0.5);
   
   /* --- Z-Index --- */
   --z-index-header: 100;
@@ -55,7 +60,11 @@
   --z-index-dropdown: 1050;
 }
 
-/* ========== 2. BASE & RESET ========== */
+/* =======================================
+   2. BASE, RESETS, & KEYFRAMES
+   ======================================= */
+
+/* --- Base & Reset --- */
 * {
   margin: 0;
   padding: 0;
@@ -87,271 +96,53 @@ body {
   position: relative;
 }
 
-/* --- Animated Page Background --- */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(244, 255, 78, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 80% 70%, rgba(52, 211, 153, 0.1) 0%, transparent 40%);
-  animation: pulseGlow 10s ease-in-out infinite;
-  pointer-events: none;
-  z-index: -1;
-}
-.docs-modal {
-  position: fixed;
-  top: 10%;
-  left: 50%;
-  transform: translateX(-50%) scale(0.95);
-  width: 80%;
-  max-width: 900px;
-  background: rgba(20, 26, 20, 0.96);
-  border: 2px solid rgba(244,255,78,0.3);
-  border-radius: 1rem;
-  box-shadow: 0 8px 32px rgba(244,255,78,0.3);
-  animation: slideDown 0.4s ease forwards;
-  overflow-y: auto;
-  z-index: 1200;
-}
-@keyframes slideDown {
-  from {opacity: 0; transform: translate(-50%, -20%) scale(0.95);}
-  to {opacity: 1; transform: translate(-50%, 0) scale(1);}
-}
-.docs-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(6px) saturate(160%);
-  z-index: 2000;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* keep top alignment */
-  padding-top: 1rem; /* reduced space */
-  overflow-y: auto;
-  scroll-behavior: smooth;
-}
-
-.docs-modal {
-  background: rgba(10, 20, 10, 0.94);
-  border: 1.5px solid rgba(186, 255, 55, 0.4);
-  border-radius: 1rem;
-  box-shadow: 0 0 25px rgba(186, 255, 55, 0.25);
-  color: #eaffd5;
-  width: 92%;
-  max-width: 850px;
-  max-height: 90vh;
-  overflow-y: auto;
-  animation: slideDown 0.4s ease forwards;
-  font-family: "Inter", sans-serif;
-  margin-top: 0; /* ensures top display */
-}
-
-@media (max-width: 768px) {
-  .docs-backdrop {
-    align-items: flex-start;
-    padding-top: 0.5rem; /* tighter top spacing */
-  }
-
-  .docs-modal {
-    width: 95%;
-    max-height: 88vh;
-    border-radius: 0.75rem;
-    margin-top: 0.25rem;
-  }
-}
-
-
-.docs-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(186, 255, 55, 0.3);
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-}
-
-.docs-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 1rem;
-}
-
-.tab-btn {
-  background: rgba(186, 255, 55, 0.12);
-  border: 1px solid rgba(186, 255, 55, 0.3);
-  color: #eaffd5;
-  border-radius: 0.5rem;
-  padding: 0.4rem 0.9rem;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-.tab-btn:hover {
-  background: rgba(186, 255, 55, 0.25);
-}
-.tab-active {
-  background: rgba(186, 255, 55, 0.35);
-  border-color: rgba(186, 255, 55, 0.6);
-  color: #fff;
-  font-weight: 600;
-}
-/* ================================
-   ⚡ Neon Close Button Styling
-================================ */
-.close-docs-btn {
-  position: absolute;
-  top: 14px;
-  right: 16px;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 1.8px solid rgba(186, 255, 55, 0.4);
-  background: rgba(10, 20, 10, 0.7);
-  color: #d9ff6a;
-  font-size: 26px;
-  font-weight: 900;
-  line-height: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  box-shadow:
-    0 0 12px rgba(186, 255, 55, 0.4),
-    inset 0 0 8px rgba(186, 255, 55, 0.2);
-  text-shadow: 0 0 8px rgba(186, 255, 55, 0.7);
-  transition: all 0.25s ease;
-  z-index: 100;
-}
-
-.close-docs-btn:hover {
-  background: linear-gradient(135deg, #baff37, #eaff6a);
-  color: #041104;
-  transform: scale(1.15) rotate(180deg);
-  border-color: rgba(255, 255, 120, 0.7);
-  box-shadow:
-    0 0 20px rgba(220, 255, 80, 0.8),
-    0 0 40px rgba(186, 255, 55, 0.3);
-}
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease forwards;
-}
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeUp {
-  animation: fadeUp 0.7s ease-out both;
-}
-@keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeUp {
-  animation: fadeUp 0.8s ease-out both;
-}
-
-.animate-fadeUp {
-  animation: fadeUp 0.7s ease-out both;
-}
-/* ===== Download Button (Hero) ===== */
-.btn-download {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 18px;
-  border-radius: 12px;
-  border: 1px solid var(--border, rgba(150,255,80,.28));
-  background: linear-gradient(180deg, rgba(186,255,55,0.12), rgba(9,30,9,0.35));
-  box-shadow: 0 8px 28px rgba(186,255,55,.14), inset 0 1px 0 rgba(255,255,255,.04);
-  color: var(--text, #e4ffd2);
-  font-weight: 700;
-  letter-spacing: .3px;
+.app {
+  min-height: 100vh;
   position: relative;
-  overflow: hidden;
-  transform: translateZ(0);
-  transition: transform .2s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
-  text-decoration: none;
-  backdrop-filter: blur(6px) saturate(120%);
+  animation: pageReveal 1s ease-out forwards;
 }
 
-.btn-download.large {
-  padding: 14px 22px;
-  font-size: 15px;
+/* --- Consolidated Keyframes --- */
+@keyframes neonBreathe {
+  0%, 100% { box-shadow: var(--shadow-neon-md); transform: scale(1); }
+  50% { box-shadow: var(--shadow-neon-lg); transform: scale(1.03); }
 }
 
-.btn-download svg {
-  transition: transform .25s ease, opacity .25s ease;
-  opacity: .95;
+@keyframes pulseGlowBackground {
+  0%   { opacity: 0.5; transform: scale(1); }
+  50%  { opacity: 0.9; transform: scale(1.05); }
+  100% { opacity: 0.5; transform: scale(1); }
 }
 
-.btn-download::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  background: radial-gradient(120px 120px at var(--mx, 50%) var(--my, 50%), rgba(186,255,55,.18), transparent 55%);
-  opacity: 0;
-  transition: opacity .25s ease;
-  pointer-events: none;
+@keyframes pulseGlowText {
+  0%   { text-shadow: 0 0 6px rgba(186, 255, 55, 0.6), 0 0 12px rgba(186, 255, 55, 0.3); }
+  50%  { text-shadow: 0 0 12px rgba(204, 255, 0, 0.9), 0 0 24px rgba(186, 255, 55, 0.5); }
+  100% { text-shadow: 0 0 6px rgba(186, 255, 55, 0.6), 0 0 12px rgba(186, 255, 55, 0.3); }
 }
 
-.btn-download::after {
-  content: "";
-  position: absolute;
-  left: -40%;
-  top: 0;
-  width: 40%;
-  height: 100%;
-  transform: skewX(-20deg);
-  background: linear-gradient(90deg, transparent, rgba(186,255,55,.25), transparent);
-  opacity: 0;
-  transition: opacity .25s ease;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
-.btn-download:hover {
-  border-color: rgba(234,255,145,.7);
-  box-shadow: 0 0 0 2px rgba(186,255,55,.18), 0 16px 44px rgba(186,255,55,.18);
-  background: linear-gradient(180deg, rgba(186,255,55,0.18), rgba(9,30,9,0.45));
-  transform: translateY(-1px);
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
 }
 
-.btn-download:hover svg {
-  transform: translateY(-1px);
-  opacity: 1;
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
-.btn-download:hover::before,
-.btn-download:hover::after {
-  opacity: 1;
-  animation: sweep 1.15s ease forwards;
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pageReveal {
+  from { opacity: 0; filter: blur(8px); transform: translateY(10px); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0); }
 }
 
 @keyframes sweep {
@@ -360,74 +151,145 @@ body::before {
   100% { left: 115%; }
 }
 
-@media (max-width: 640px) {
-  .hero-buttons .btn-download.large {
-    width: 100%;
-    justify-content: center;
+@keyframes enhancedPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes enhancedGradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes glitchTop {
+  0%, 100% { transform: translate(-6px, -3px); }
+  50% { transform: translate(-8px, -5px); }
+}
+
+@keyframes glitchBottom {
+  0%, 100% { transform: translate(6px, 3px); }
+  50% { transform: translate(8px, 5px); }
+}
+
+@keyframes headerWave {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+@keyframes logoSpin {
+  from { filter: hue-rotate(0deg); }
+  to { filter: hue-rotate(360deg); }
+}
+
+@keyframes enhancedGridMove {
+  0%   { background-position: 0 0; opacity: 0.3; }
+  50%  { background-position: 25px 25px; opacity: 0.5; }
+  100% { background-position: 50px 50px; opacity: 0.3; }
+}
+
+@keyframes enhancedParticleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes enhancedFadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.03); }
-}
-.animate-pulseGlow {
-  animation: pulseGlow 6s infinite ease-in-out;
-}
-
-.close-docs-btn:active {
-  transform: scale(0.95);
-}
-
-.docs-content {
-  line-height: 1.7;
-  font-size: 0.95rem;
-  animation: fadeIn 0.3s ease;
-}
-
-.docs-content ul {
-  margin-left: 1.5rem;
-  list-style-type: disc;
-}
-
-@keyframes slideDown {
-  from { opacity: 0; transform: translateY(-30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
+@keyframes enhancedFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-@keyframes fadeIn {
-  from {opacity:0; transform:scale(0.95);}
-  to   {opacity:1; transform:scale(1);}
+
+@keyframes enhancedSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
+
+@keyframes badgeMorph {
+  0%, 100% { border-radius: 9999px; }
+  50% { border-radius: var(--border-radius-lg); }
+}
+
+@keyframes gradientPulse {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+@keyframes enhancedWaveFlow {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 0%; }
+  100% { background-position: 0% 0%; }
+}
+
+@keyframes enhancedGradientRotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes enhancedCardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(50px) rotateX(-20deg) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg) scale(1);
+  }
+}
+
+@keyframes floatIcon {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-5px) rotate(5deg); }
+}
+
+@keyframes cardStagger {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes neonBorderFlicker {
+  0%, 100% { border-color: rgba(150, 255, 80, 0.28); }
+  50% { border-color: rgba(200, 255, 120, 0.7); }
+}
+
+/* --- Animated Page Background --- */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(244, 255, 78, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(52, 211, 153, 0.1) 0%, transparent 40%);
+  animation: pulseGlowBackground 10s ease-in-out infinite;
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* --- Animations --- */
 .animate-fadeIn {
-  animation: fadeIn 0.25s ease-out forwards;
+  animation: fadeIn 0.5s ease forwards;
 }
-
-button[aria-label="Close"] {
-  transition: all 0.2s ease-in-out;
+.animate-fadeUp {
+  animation: fadeUp 0.7s ease-out both;
 }
-button[aria-label="Close"]:hover {
-  text-shadow: 0 0 10px rgba(186, 255, 55, 0.7);
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.6; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.05); }
-}
-
-.app {
-  min-height: 100vh;
-  position: relative;
-  animation: pageReveal 1s ease forwards;
-}
-
-@keyframes pageReveal {
-  from { opacity: 0; filter: blur(10px); }
-  to { opacity: 1; filter: blur(0); }
+.animate-pulseGlow {
+  animation: pulseGlowBackground 6s infinite ease-in-out;
 }
 
 /* ========== 3. BUTTONS ========== */
@@ -450,6 +312,7 @@ button[aria-label="Close"]:hover {
   position: relative;
   overflow: hidden;
   box-shadow: var(--shadow-neon-md);
+  animation: neonBreathe 3s ease-in-out infinite;
 }
 
 .btn-primary::before {
@@ -464,100 +327,12 @@ button[aria-label="Close"]:hover {
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-2px) scale(1.05);
   box-shadow: var(--shadow-neon-lg);
-}
-@keyframes pulseGlow {
-  0% {
-    text-shadow: 0 0 6px rgba(186, 255, 55, 0.6),
-                 0 0 12px rgba(186, 255, 55, 0.3);
-  }
-  50% {
-    text-shadow: 0 0 12px rgba(186, 255, 55, 0.9),
-                 0 0 24px rgba(186, 255, 55, 0.4);
-  }
-  100% {
-    text-shadow: 0 0 6px rgba(186, 255, 55, 0.6),
-                 0 0 12px rgba(186, 255, 55, 0.3);
-  }
-}
-/* ===============================
-   ⚡ View Documentation Button Style
-=============================== */
-.view-docs-btn {
-  background: linear-gradient(90deg, #baff37 0%, #d7ff63 100%);
-  color: #061006;
-  border: none;
-  border-radius: 10px;
-  font-weight: 700;
-  font-size: 16px;
-  padding: 10px 20px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 0 10px rgba(186, 255, 55, 0.5),
-              inset 0 0 6px rgba(255, 255, 255, 0.2);
-  text-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
-}
-
-.view-docs-btn:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 0 18px rgba(200, 255, 60, 0.8),
-              0 0 30px rgba(186, 255, 55, 0.4);
-  background: linear-gradient(90deg, #e6ff6a 0%, #baff37 100%);
 }
 
 .btn-primary:hover::before {
   left: 100%;
-}
-/* ==========================
-   ⚡ Feature Documentation Modal
-========================== */
-.docs-modal {
-  backdrop-filter: blur(12px) saturate(160%);
-  border: 1px solid rgba(186, 255, 55, 0.35);
-  border-radius: 16px;
-  animation: fadeIn 0.3s ease;
-  box-shadow: 0 0 20px rgba(186, 255, 55, 0.3),
-              0 0 40px rgba(186, 255, 55, 0.1);
-}
-
-.docs-tabs {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  flex-wrap: wrap;
-  padding: 12px;
-}
-
-.tab-btn {
-  border: 1px solid rgba(186, 255, 55, 0.4);
-  background: rgba(186, 255, 55, 0.08);
-  color: #d9ffb0;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 10px;
-  transition: all 0.2s ease;
-}
-
-.tab-btn:hover {
-  background: rgba(186, 255, 55, 0.15);
-  transform: scale(1.05);
-}
-
-.tab-active {
-  background: linear-gradient(90deg, #baff37 0%, #e6ff78 100%);
-  color: #061006;
-  box-shadow: 0 0 10px rgba(186, 255, 55, 0.5);
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .btn-primary.large {
@@ -588,12 +363,7 @@ button[aria-label="Close"]:hover {
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-sm);
-  animation: buttonGlow 3s ease-in-out infinite;
-}
-
-@keyframes buttonGlow {
-  0%, 100% { box-shadow: var(--shadow-neon-md); }
-  50% { box-shadow: var(--shadow-neon-lg); }
+  animation: neonBreathe 3s ease-in-out infinite;
 }
 
 .btn-glitch::before,
@@ -632,16 +402,6 @@ button[aria-label="Close"]:hover {
   transform: translate(6px, 3px);
   clip-path: polygon(0 70%, 100% 72%, 100% 100%, 0 98%);
   animation: glitchBottom 0.5s infinite;
-}
-
-@keyframes glitchTop {
-  0%, 100% { transform: translate(-6px, -3px); }
-  50% { transform: translate(-8px, -5px); }
-}
-
-@keyframes glitchBottom {
-  0%, 100% { transform: translate(6px, 3px); }
-  50% { transform: translate(8px, 5px); }
 }
 
 .btn-glitch span, .btn-glitch svg {
@@ -727,29 +487,6 @@ button[aria-label="Close"]:hover {
   transform: translateY(-2px) rotate(5deg);
   box-shadow: var(--shadow-neon-sm);
 }
-.modal-section {
-  margin-bottom: var(--spacing-2xl);
-  opacity: 1;
-  transform: translateX(0);
-  animation: sectionReveal 0.4s ease forwards;
-}
-
-.modal-section:nth-child(1) { animation-delay: 0.05s; }
-.modal-section:nth-child(2) { animation-delay: 0.1s; }
-.modal-section:nth-child(3) { animation-delay: 0.15s; }
-.modal-section:nth-child(4) { animation-delay: 0.2s; }
-.modal-section:nth-child(5) { animation-delay: 0.25s; }
-
-@keyframes sectionReveal {
-  from {
-    opacity: 0;
-    transform: translateX(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 
 /* --- Close Button (Modals) --- */
 .close-btn, .modal-close {
@@ -781,6 +518,102 @@ button[aria-label="Close"]:hover {
   z-index: 10;
 }
 
+/* --- View Documentation Button Style --- */
+.view-docs-btn {
+  background: linear-gradient(90deg, #baff37 0%, #d7ff63 100%);
+  color: #061006;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 10px rgba(186, 255, 55, 0.5),
+              inset 0 0 6px rgba(255, 255, 255, 0.2);
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.4);
+}
+
+.view-docs-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 0 18px rgba(200, 255, 60, 0.8),
+              0 0 30px rgba(186, 255, 55, 0.4);
+  background: linear-gradient(90deg, #e6ff6a 0%, #baff37 100%);
+}
+
+/* --- Download Button (Hero) --- */
+.btn-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  border: 1px solid var(--border, rgba(150,255,80,.28));
+  background: linear-gradient(180deg, rgba(186,255,55,0.12), rgba(9,30,9,0.35));
+  box-shadow: 0 8px 28px rgba(186,255,55,.14), inset 0 1px 0 rgba(255,255,255,.04);
+  color: var(--text, #e4ffd2);
+  font-weight: 700;
+  letter-spacing: .3px;
+  position: relative;
+  overflow: hidden;
+  transform: translateZ(0);
+  transition: transform .2s ease, box-shadow .25s ease, border-color .25s ease, background .25s ease;
+  text-decoration: none;
+  backdrop-filter: blur(6px) saturate(120%);
+  animation: neonBorderFlicker 4s ease-in-out infinite;
+}
+
+.btn-download.large {
+  padding: 14px 22px;
+  font-size: 15px;
+}
+
+.btn-download svg {
+  transition: transform .25s ease, opacity .25s ease;
+  opacity: .95;
+}
+
+.btn-download::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(120px 120px at var(--mx, 50%) var(--my, 50%), rgba(186,255,55,.18), transparent 55%);
+  opacity: 0;
+  transition: opacity .25s ease;
+  pointer-events: none;
+}
+
+.btn-download::after {
+  content: "";
+  position: absolute;
+  left: -40%;
+  top: 0;
+  width: 40%;
+  height: 100%;
+  transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(186,255,55,.25), transparent);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.btn-download:hover {
+  border-color: rgba(234,255,145,.7);
+  box-shadow: 0 0 0 2px rgba(186,255,55,.18), 0 16px 44px rgba(186,255,55,.18);
+  background: linear-gradient(180deg, rgba(186,255,55,0.18), rgba(9,30,9,0.45));
+  transform: translateY(-1px);
+  animation-play-state: paused; /* Pause flicker on hover */
+}
+
+.btn-download:hover svg {
+  transform: translateY(-1px);
+  opacity: 1;
+}
+
+.btn-download:hover::before,
+.btn-download:hover::after {
+  opacity: 1;
+  animation: sweep 1.15s ease forwards;
+}
 
 /* ========== 4. HEADER & USER MENU ========== */
 .header {
@@ -837,23 +670,7 @@ button[aria-label="Close"]:hover {
   box-shadow: var(--shadow-neon-md);
   position: relative;
   overflow: hidden;
-  animation: logoPulse 3s ease-in-out infinite, logoSpin 20s linear infinite;
-}
-
-@keyframes logoPulse {
-  0%, 100% { 
-    transform: scale(1); 
-    box-shadow: var(--shadow-neon-md);
-  }
-  50% { 
-    transform: scale(1.1); 
-    box-shadow: var(--shadow-neon-lg);
-  }
-}
-
-@keyframes logoSpin {
-  from { filter: hue-rotate(0deg); }
-  to { filter: hue-rotate(360deg); }
+  animation: neonBreathe 3s ease-in-out infinite, logoSpin 20s linear infinite;
 }
 
 .logo-icon .icon {
@@ -876,13 +693,8 @@ button[aria-label="Close"]:hover {
   color: var(--color-accent-lime);
   margin: 0;
   font-weight: 500;
-  animation: textGlow 2s ease-in-out infinite alternate;
+  animation: pulseGlowText 2s ease-in-out infinite alternate;
   text-shadow: 0 0 10px rgba(190, 242, 45, 0.8);
-}
-
-@keyframes textGlow {
-  from { text-shadow: 0 0 10px rgba(244, 255, 78, 0.5), 0 0 20px rgba(190, 242, 45, 0.3); }
-  to { text-shadow: 0 0 20px rgba(244, 255, 78, 0.9), 0 0 40px rgba(190, 242, 45, 0.6); }
 }
 
 /* --- Navigation --- */
@@ -943,7 +755,7 @@ button[aria-label="Close"]:hover {
   border-radius: var(--border-radius-md);
   padding: var(--spacing-sm) 0;
   z-index: var(--z-index-dropdown);
-  animation: enhancedFadeInDropdown 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+  animation: enhancedFadeInDropdown 0.3s var(--transition-normal) forwards;
   overflow: hidden;
 }
 
@@ -1065,7 +877,6 @@ button[aria-label="Close"]:hover {
   transform: translateY(-1px);
 }
 
-
 /* --- Mobile Menu --- */
 .mobile-menu-btn {
   display: block;
@@ -1090,7 +901,7 @@ button[aria-label="Close"]:hover {
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-  animation: enhancedSlideDown 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: enhancedSlideDown 0.4s var(--transition-normal);
   transform-origin: top;
 }
 
@@ -1162,12 +973,7 @@ button[aria-label="Close"]:hover {
     linear-gradient(to bottom, rgba(244, 255, 78, 0.03) 1px, transparent 1px);
   background-size: 50px 50px;
   opacity: 0.4;
-  animation: enhancedGridMove 25s linear infinite;
-}
-
-@keyframes enhancedGridMove {
-  from { background-position: 0 0; }
-  to { background-position: 50px 50px; }
+  animation: enhancedGridMove 20s linear infinite;
 }
 
 .hero-particles {
@@ -1179,11 +985,6 @@ button[aria-label="Close"]:hover {
   background-size: 100px 100px, 150px 150px;
   opacity: 0.3;
   animation: enhancedParticleFloat 35s ease-in-out infinite;
-}
-
-@keyframes enhancedParticleFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
 }
 
 .hero-content {
@@ -1208,13 +1009,8 @@ button[aria-label="Close"]:hover {
   color: var(--color-accent-yellow);
   font-weight: 600;
   backdrop-filter: blur(10px);
-  animation: enhancedFadeInUp 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), badgeNeonPulse 3s ease-in-out infinite;
+  animation: enhancedFadeInUp 1s cubic-bezier(0.68, -0.55, 0.265, 1.55), neonBreathe 3s ease-in-out infinite;
   box-shadow: var(--shadow-neon-sm);
-}
-
-@keyframes badgeNeonPulse {
-  0%, 100% { box-shadow: var(--shadow-neon-sm); }
-  50% { box-shadow: var(--shadow-neon-md); }
 }
 
 .pulse-dot {
@@ -1226,11 +1022,6 @@ button[aria-label="Close"]:hover {
   box-shadow: 0 0 15px var(--color-accent-yellow), 0 0 30px var(--color-accent-lime);
 }
 
-@keyframes enhancedPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
 .hero-title {
   font-size: 3.5rem;
   font-weight: 800;
@@ -1239,7 +1030,7 @@ button[aria-label="Close"]:hover {
   line-height: 1.1;
   letter-spacing: -0.02em;
   animation: enhancedFadeInUp 1s ease 0.2s both;
-  text-shadow: 0 0 30px rgba(244, 255, 78, 0.3);
+  text-shadow: var(--text-shadow-neon);
 }
 
 .gradient-text {
@@ -1247,24 +1038,8 @@ button[aria-label="Close"]:hover {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: enhancedGradientShift 6s ease infinite;
-  background-size: 200% 200%;
-}
-
-@keyframes enhancedGradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-@keyframes enhancedFadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  animation: enhancedGradientShift 4s ease infinite;
+  background-size: 300% 300%;
 }
 
 .hero-description {
@@ -1402,7 +1177,7 @@ button[aria-label="Close"]:hover {
   }
 }
 
-/* ========== 6. MODALS (SEARCH, AUTH, FEATURE) ========== */
+/* ========== 6. MODALS (GENERAL & DOCS) ========== */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -1417,14 +1192,9 @@ button[aria-label="Close"]:hover {
   overflow-y: auto;
 }
 
-@keyframes enhancedFadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 /* --- Base Modal Styles --- */
 .search-modal,
-.auth-modal, /* Assuming Auth.jsx uses this class */
+.auth-modal,
 .feature-modal {
   backdrop-filter: blur(20px) saturate(180%);
   background: rgba(20, 26, 20, 0.9);
@@ -1432,20 +1202,147 @@ button[aria-label="Close"]:hover {
   box-shadow: var(--shadow-neon-lg);
   border-radius: var(--border-radius-lg);
   width: 100%;
-  animation: enhancedSlideUp 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  animation: enhancedSlideUp 0.4s var(--transition-normal);
   transform-origin: top;
   margin-bottom: auto; /* Pushes modal to top */
 }
 
-@keyframes enhancedSlideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
+/* --- Documentation Modal Specifics --- */
+.docs-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px) saturate(160%);
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* keep top alignment */
+  padding-top: 1rem;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  animation: fadeIn 0.3s ease;
+}
+
+.docs-modal {
+  position: relative;
+  background: rgba(10, 20, 10, 0.94);
+  border: 1.5px solid rgba(186, 255, 55, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(186, 255, 55, 0.25),
+              0 0 40px rgba(186, 255, 55, 0.1);
+  color: #eaffd5;
+  width: 92%;
+  max-width: 850px;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: enhancedSlideUp 0.4s var(--transition-normal);
+  font-family: "Inter", sans-serif;
+  margin-top: 0;
+  padding: 1.5rem; /* Added padding */
+}
+
+@media (max-width: 768px) {
+  .docs-backdrop {
+    align-items: flex-start;
+    padding-top: 0.5rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+  .docs-modal {
+    width: 95%;
+    max-height: 88vh;
+    border-radius: 0.75rem;
+    margin-top: 0.25rem;
   }
+}
+
+.docs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(186, 255, 55, 0.3);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.docs-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+  margin-bottom: 1rem;
+}
+
+.tab-btn {
+  border: 1px solid rgba(186, 255, 55, 0.4);
+  background: rgba(186, 255, 55, 0.08);
+  color: #d9ffb0;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tab-btn:hover {
+  background: rgba(186, 255, 55, 0.15);
+  transform: scale(1.05);
+}
+
+.tab-active {
+  background: linear-gradient(90deg, #baff37 0%, #e6ff78 100%);
+  color: #061006;
+  box-shadow: 0 0 10px rgba(186, 255, 55, 0.5);
+}
+
+/* --- Neon Close Button (Docs) --- */
+.close-docs-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1.8px solid rgba(186, 255, 55, 0.4);
+  background: rgba(10, 20, 10, 0.7);
+  color: #d9ff6a;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow:
+    0 0 12px rgba(186, 255, 55, 0.4),
+    inset 0 0 8px rgba(186, 255, 55, 0.2);
+  text-shadow: 0 0 8px rgba(186, 255, 55, 0.7);
+  transition: all 0.25s ease;
+  z-index: 100;
+}
+
+.close-docs-btn:hover {
+  background: linear-gradient(135deg, #baff37, #eaff6a);
+  color: #041104;
+  transform: scale(1.15) rotate(180deg);
+  border-color: rgba(255, 255, 120, 0.7);
+  box-shadow:
+    0 0 20px rgba(220, 255, 80, 0.8),
+    0 0 40px rgba(186, 255, 55, 0.3);
+}
+
+.close-docs-btn:active {
+  transform: scale(0.95);
+}
+
+.docs-content {
+  line-height: 1.7;
+  font-size: 0.95rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.docs-content ul {
+  margin-left: 1.5rem;
+  list-style-type: disc;
 }
 
 /* --- Search Modal --- */
@@ -1481,11 +1378,6 @@ button[aria-label="Close"]:hover {
   transform-origin: left;
 }
 
-.search-header input:focus + ::after { /* This is tricky, can't use + */
-  /* Using JS to add a class would be better, but for CSS-only: */
-  /* We'll make the input itself glow */
-}
-
 .search-header input {
   flex: 1;
   background: transparent;
@@ -1499,6 +1391,9 @@ button[aria-label="Close"]:hover {
 .search-header input:focus {
   transform: scale(1.01);
   text-shadow: 0 0 5px var(--color-accent-yellow);
+}
+.search-header:focus-within::after {
+  transform: scaleX(1);
 }
 
 .search-header input::placeholder {
@@ -1618,8 +1513,6 @@ button[aria-label="Close"]:hover {
   max-width: 900px;
   max-height: 90vh;
   overflow-y: auto;
-}
-.feature-modal {
   animation: fadeIn 0.3s ease;
 }
 
@@ -1644,12 +1537,6 @@ button[aria-label="Close"]:hover {
   background: var(--gradient-primary);
   animation: headerWave 3s ease-in-out infinite;
   box-shadow: 0 0 15px var(--color-accent-yellow);
-}
-
-@keyframes headerWave {
-  0% { transform: translateX(-100%); }
-  50% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
 }
 
 .modal-icon {
@@ -1698,9 +1585,9 @@ button[aria-label="Close"]:hover {
 }
 
 .modal-section {
-  opacity: 1 !important;
-  transform: none !important;
-  animation: none !important;
+  margin-bottom: var(--spacing-2xl);
+  animation: fadeUp 0.5s ease-out forwards;
+  opacity: 0; /* Start hidden for animation */
 }
 
 .modal-section:nth-child(1) { animation-delay: 0.1s; }
@@ -1708,13 +1595,6 @@ button[aria-label="Close"]:hover {
 .modal-section:nth-child(3) { animation-delay: 0.3s; }
 .modal-section:nth-child(4) { animation-delay: 0.4s; }
 .modal-section:nth-child(5) { animation-delay: 0.5s; }
-
-@keyframes sectionReveal {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
 
 .modal-section h3 {
   display: flex;
@@ -1908,11 +1788,6 @@ button[aria-label="Close"]:hover {
   animation: badgeMorph 3s ease-in-out infinite;
 }
 
-@keyframes badgeMorph {
-  0%, 100% { border-radius: 9999px; }
-  50% { border-radius: var(--border-radius-lg); }
-}
-
 .features-header h2 {
   font-size: 3rem;
   font-weight: 800;
@@ -1943,11 +1818,6 @@ h2[data-text]::after {
   animation: gradientPulse 3s linear infinite;
   pointer-events: none;
   opacity: 0.8;
-}
-
-@keyframes gradientPulse {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
 }
 
 .features-header p {
@@ -1997,12 +1867,6 @@ h2[data-text]::after {
   box-shadow: 0 0 30px rgba(244, 255, 78, 0.8),
               0 0 60px rgba(190, 242, 45, 0.6);
   filter: blur(0.5px);
-}
-
-@keyframes enhancedWaveFlow {
-  0% { background-position: 0% 0%; }
-  50% { background-position: 100% 0%; }
-  100% { background-position: 0% 0%; }
 }
 
 .category-tab {
@@ -2060,12 +1924,6 @@ h2[data-text]::after {
   opacity: 0.7;
 }
 
-@keyframes enhancedGradientRotate {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
 .tab-count {
   padding: 0.25rem 0.5rem;
   background: rgba(244, 255, 78, 0.1);
@@ -2096,17 +1954,6 @@ h2[data-text]::after {
   transform-style: preserve-3d;
 }
 
-@keyframes enhancedCardFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(50px) rotateX(-20deg) scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) rotateX(0deg) scale(1);
-  }
-}
-
 .feature-card::before {
   content: '';
   position: absolute;
@@ -2128,8 +1975,10 @@ h2[data-text]::after {
   background: radial-gradient(circle at 50% 0%,
     rgba(127, 255, 0, 0.2), transparent 70%);
   opacity: 0;
-  transition: opacity var(--transition-slow);
+  transition: opacity var(--transition-slow), transform var(--transition-slow);
   pointer-events: none;
+  transform: scaleY(0.5);
+  transform-origin: top;
 }
 
 .feature-card:hover {
@@ -2145,6 +1994,7 @@ h2[data-text]::after {
 
 .feature-card:hover::after {
   opacity: 1;
+  transform: scaleY(1);
 }
 
 .card-overlay {
@@ -2192,11 +2042,6 @@ h2[data-text]::after {
   animation: floatIcon 4s ease-in-out infinite;
 }
 
-@keyframes floatIcon {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-5px) rotate(5deg); }
-}
-
 .feature-card:hover .card-icon {
   transform: scale(1.1) rotate(360deg);
   box-shadow: var(--shadow-neon-lg);
@@ -2228,8 +2073,8 @@ h2[data-text]::after {
 }
 
 .feature-card:hover .card-title {
-  color: var(--color-accent-yellow);
-  text-shadow: 0 0 10px rgba(244, 255, 78, 0.5);
+  color: var(--color-accent-lime);
+  text-shadow: var(--text-shadow-neon);
 }
 
 .card-description {
@@ -2403,9 +2248,29 @@ h2[data-text]::after {
 .capability-card:nth-child(3) { animation-delay: 0.3s; }
 .capability-card:nth-child(4) { animation-delay: 0.4s; }
 
-@keyframes cardStagger {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+/* NEW "Circuit Line" Animation */
+.capability-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background: var(--color-accent-yellow);
+  box-shadow: 0 0 12px var(--color-accent-yellow);
+  transition: height var(--transition-normal);
+}
+
+.capability-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 3px;
+  height: 0;
+  background: var(--color-accent-lime);
+  box-shadow: 0 0 12px var(--color-accent-lime);
+  transition: height var(--transition-normal) 0.1s;
 }
 
 .capability-card:hover {
@@ -2413,6 +2278,11 @@ h2[data-text]::after {
   border-color: var(--color-border-light);
   transform: translateY(-5px) rotateZ(2deg);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), var(--shadow-neon-sm);
+}
+
+.capability-card:hover::before,
+.capability-card:hover::after {
+  height: 100%;
 }
 
 .capability-icon {
@@ -2678,14 +2548,14 @@ h2[data-text]::after {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--color-accent-yellow), var(--color-accent-lime));
+  background: linear-gradient(var(--color-accent-neon), var(--color-accent-lime));
   border-radius: 5px;
-  box-shadow: 0 0 10px var(--color-accent-yellow);
+  box-shadow: 0 0 12px var(--color-accent-neon);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  filter: brightness(1.2);
-  box-shadow: 0 0 15px var(--color-accent-lime);
+  filter: brightness(1.3);
+  box-shadow: 0 0 20px var(--color-accent-lime);
 }
 
 @media (max-width: 768px) {
@@ -2708,13 +2578,18 @@ h2[data-text]::after {
   .modal-actions {
     flex-direction: column;
   }
-  .modal-actions button {
+  .modal-actions button,
+  .modal-actions .btn-primary {
     width: 100%;
     justify-content: center;
   }
   .footer-bottom {
     flex-direction: column;
     text-align: center;
+  }
+  .hero-buttons .btn-download.large {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -2741,6 +2616,7 @@ h2[data-text]::after {
 /* ========== 13. MODAL BODY LOCK (FIX) ========== */
 /* This stops the main page from scrolling when any modal is open */
 body:has(.modal-overlay),
-body:has(.auth-overlay) {
+body:has(.auth-overlay),
+body:has(.docs-backdrop) {
   overflow: hidden;
 }

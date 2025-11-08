@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import VersePortal from "./Energy/VersePortal";
+import VersePortal from "./AgroVerse/AgroPortal";
 import AdminPanel from "./components/AdminPanel";
 import AdminLogin from "./components/AdminLogin";
 import ProtectedAdminRoute from "./components/routes/ProtectedAdminRoute";

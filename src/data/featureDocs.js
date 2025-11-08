@@ -1,435 +1,577 @@
+// src/data/featureDocs.js
+
 export const featureDocs = {
-  "Solar Panel Health & Efficiency Monitoring": {
-    overview: `This module continuously evaluates the performance of solar panels by combining remote sensing imagery and IoT sensor streams. 
-It identifies panel degradation, detects hotspot issues, and estimates the efficiency loss due to dust, temperature, or structural misalignment. 
-The system uses hybrid AI models to provide both real-time and long-term performance monitoring through interactive dashboards.`,
+  "Crop Health Intelligence": {
+    overview:
+      "Fuses satellite indices, terrain, soil and weather streams to assess crop vigor, detect stress early, and recommend actionable interventions at field level.",
     inputs: [
-      "Sentinel-2 / Landsat imagery for surface and spectral analysis",
-      "IoT sensor streams (voltage, current, temperature, irradiance)",
-      "PVGIS solar irradiance datasets for baseline performance estimation",
-      "Open-Meteo weather data for temperature and humidity context"
+      "Sentinel-2 / MODIS / Landsat-8/9 NDVI/EVI",
+      "Soil-adjusted indices (SAVI, MSAVI)",
+      "Open-Meteo weather (temp, precipitation, humidity, wind)",
+      "Open-Elevation DEM (slope/aspect/curvature)",
+      "Copernicus soil type",
+      "FAO AQUASTAT irrigation coverage",
+      "USDA Quick Stats regional ag statistics",
+      "Optional: Field boundaries (GeoJSON), notes/photos"
     ],
     outputs: [
-      "Thermal and efficiency heatmaps",
-      "Predicted daily output and degradation metrics",
-      "Fault detection and performance alerts",
-      "Downloadable GeoJSON or CSV performance summaries"
+      "Vegetation health maps (NDVI/EVI/SAVI/MSAVI)",
+      "Water / nutrient / disease stress detection",
+      "Temporal crop-health trends",
+      "Management-zone segmentation",
+      "Irrigation / fertilization / pesticide recommendations",
+      "Sudden vegetation drop alerts",
+      "Printable reports with annotated maps"
     ],
     ml: [
-      "Vision Transformer (ViT) for spatial pattern detection",
-      "Temporal Fusion Transformer for multi-time forecasting",
-      "Unsupervised Anomaly Detection for fault classification"
+      "Multimodal Transformer (Perceiver IO)",
+      "GAN / Diffusion hybrid (stress visualization)",
+      "RL (MuZero) for adaptive recommendations",
+      "Temporal Forecasting: TFT + N-BEATS",
+      "GNN for inter-field correlation",
+      "End-to-End MLOps pipeline"
     ],
-    integration: `This system fuses IoT and satellite data layers through a transformer-based pipeline. 
-It validates energy output patterns against expected irradiance and identifies inefficiencies through temporal and spatial correlation.`,
+    integration:
+      "Back end aggregates satellite/weather/terrain/soil and optional user inputs; pipelines produce maps, trends, alerts, and prescriptions.",
     useCases: [
-      "Smart solar farm operation with automated fault detection",
-      "Predictive maintenance scheduling for utility-scale solar arrays",
-      "Visual efficiency monitoring for large photovoltaic plants"
+      "Farm-scale crop condition monitoring",
+      "Early stress discovery and mitigation",
+      "Seasonal benchmarking and reporting"
     ]
   },
 
-  "Solar & Wind Power Generation Forecast": {
-    overview: `The forecast module predicts near-term and week-ahead energy generation potential using weather forecasts and historical renewable data. 
-It correlates local irradiance and wind speed conditions with generation behavior to improve planning and reduce grid imbalance.`,
+  "Pest & Disease Early Warning": {
+    overview:
+      "Combines vegetation/leaf-area signals, weather, bulletins, and social streams to estimate outbreak risk and trigger early interventions.",
     inputs: [
-      "Open-Meteo weather forecasts (temperature, wind speed, irradiance)",
-      "NREL and OpenEI renewable generation datasets",
-      "PVGIS and Global Wind Atlas for site-level resource data",
-      "Terrain and topographical elevation datasets"
+      "Sentinel-2 NDVI/LAI, MODIS LAI",
+      "Open-Meteo weather",
+      "FAO bulletins",
+      "Twitter/X (free tier) signals",
+      "Perenual plant data",
+      "OpenStreetMap land-use",
+      "Optional: local extension data, pest sightings"
     ],
     outputs: [
-      "7-day ahead generation forecast with confidence intervals",
-      "Peak production hour identification",
-      "Animated regional forecast maps",
-      "Detailed CSV time-series and daily summaries"
+      "Pest/disease risk heatmaps",
+      "Outbreak probability per crop",
+      "Species-specific alerts",
+      "Occurrence trend analysis",
+      "Suggested control measures",
+      "Community notifications",
+      "Extension-ready reports"
     ],
     ml: [
-      "Temporal Fusion Transformer (TFT) for time-series energy forecasting",
-      "Graph Neural Networks (GNNs) for spatial pattern learning"
+      "Multimodal Transformer (satellite + weather + text/social)",
+      "RL (DreamerV3) for intervention timing",
+      "GNN for spatial propagation",
+      "End-to-End MLOps"
     ],
-    integration: `This feature integrates weather APIs, terrain models, and historical energy datasets to forecast both solar and wind generation. 
-The AI model learns spatial correlations between nearby regions using GNN layers, improving accuracy during fluctuating climate conditions.`,
+    integration:
+      "Risk scoring fuses spectral, climatic, and textual signals; alerts route to users and community channels.",
     useCases: [
-      "Predicting renewable power availability for grid scheduling",
-      "Supporting short-term dispatch planning and energy trading",
-      "Enabling demand-supply balancing for hybrid renewable plants"
+      "District-level early warning",
+      "Targeted spraying advisories",
+      "Extension service dashboards"
     ]
   },
 
-  "EV Charging Demand Prediction": {
-    overview: `This AI-driven system predicts EV charging demand across regions using urban mobility, weather, and road data. 
-It generates dynamic heatmaps and identifies high-load stations in advance to prevent network congestion.`,
+  "Generative Future Crop Visualization": {
+    overview:
+      "Generates plausible future crop imagery and rotation scenarios using historical indices, forecast weather, terrain/soil, and plans.",
     inputs: [
-      "EV registration and regional mobility datasets (open or synthetic)",
-      "Open Charge Map API for charging station metadata",
-      "OpenStreetMap road and route network data",
-      "Open-Meteo weather patterns influencing EV usage"
+      "Historical NDVI/EVI (Landsat-8/9, MODIS)",
+      "Open-Meteo weather forecast",
+      "Copernicus terrain/soil",
+      "Crop rotation / planting schedule datasets",
+      "Ag Data Commons",
+      "User: rotation plan / schedule"
     ],
     outputs: [
-      "Regional EV charging demand heatmaps",
-      "Peak usage prediction per charging station",
-      "What-if scenario simulations (e.g., adding new stations)",
-      "Text summaries and TTS alerts for overload warnings"
+      "Simulated crop growth imagery",
+      "Multi-season rotation simulations",
+      "Growth-stage predictions",
+      "‘What-if’ scenario visuals",
+      "Crop selection suggestions",
+      "Optimal planting schedule"
     ],
     ml: [
-      "LSTM for temporal demand forecasting",
-      "Graph Transformer for spatial EV load correlation",
-      "Multimodal Fusion model integrating road, EV, and weather data"
+      "One-Shot GAN / Diffusion hybrid",
+      "RL (MuZero) for rotation optimization",
+      "Temporal Forecasting: TFT + Informer",
+      "End-to-End MLOps"
     ],
-    integration: `The backend combines EV charging logs, weather impact, and traffic patterns. 
-It identifies underutilized or overloaded stations and simulates how network changes affect energy demand.`,
+    integration:
+      "Scenario engine renders synthetic growth under forecasted conditions and user plans; outputs visuals and schedules.",
     useCases: [
-      "Urban charging infrastructure planning",
-      "Predicting peak demand for grid load balancing",
-      "Smart city EV usage analytics and station optimization"
+      "Rotation planning and stakeholder demos",
+      "Advisory for input procurement",
+      "Extension training visuals"
     ]
   },
 
-  "Grid & Microgrid Optimization Advisor": {
-    overview: `The Grid Advisor optimizes energy distribution between renewable sources, EV loads, and storage systems. 
-It dynamically adjusts dispatch strategies using reinforcement learning to reduce grid stress and operational cost.`,
+  "Water Stress & Irrigation Advisor": {
+    overview:
+      "Estimates soil moisture and water stress to recommend optimal irrigation timing, amount, and method under cost constraints.",
     inputs: [
-      "Real-time generation data from solar and wind assets",
-      "Grid topology and power flow configurations",
-      "EV charging demand and regional consumption logs",
-      "Market pricing data for cost-sensitive optimization"
+      "NDVI & soil moisture (Copernicus, SMAP/ESA CCI)",
+      "Open-Meteo rainfall & humidity",
+      "Open-Elevation slope/aspect",
+      "Copernicus crop type maps",
+      "USDA ARMS irrigation cost data",
+      "MODIS ETa maps",
+      "User: groundwater depth, field conditions, irrigation method"
     ],
     outputs: [
-      "Load balancing and distribution recommendations",
-      "Battery storage and dispatch scheduling",
-      "Grid stress index and fault prediction reports",
-      "Scenario simulations for peak load reduction"
+      "Soil moisture maps",
+      "Field/crop water-stress levels",
+      "Irrigation schedules & optimization",
+      "Cost-benefit strategy analysis",
+      "Evapotranspiration maps",
+      "Rainfall-deficit alerts",
+      "Method recommendations"
     ],
     ml: [
-      "Reinforcement Learning (RL) for optimization under constraints",
-      "Multimodal Transformer for multi-source contextual decisions"
+      "RL (MuZero) for scheduling",
+      "Multimodal Transformer (fusion)",
+      "PINN (water modeling)",
+      "TFT + Neural ODEs",
+      "End-to-End MLOps"
     ],
-    integration: `Uses energy input data and network topology to simulate grid flow under different operational modes. 
-RL-based agents continuously improve dispatch strategy for minimizing energy losses and maximizing reliability.`,
+    integration:
+      "Combines EO/meteorology/topography with field inputs; prescribes water strategies with economics.",
     useCases: [
-      "Real-time energy flow optimization in smart grids",
-      "Dynamic scheduling of distributed microgrids",
-      "Renewable generation integration with EV storage networks"
+      "Canal/groundwater scheduling",
+      "Deficit irrigation planning",
+      "Irrigation advisory services"
     ]
   },
 
-  "Energy Market & Policy Impact Simulator": {
-    overview: `Simulates how energy policies, tariffs, and subsidies affect renewable adoption and pricing trends. 
-Combining historical market datasets and predictive models, it provides long-term projections under different policy conditions.`,
+  "Climate Impact & Anomaly Detector": {
+    overview:
+      "Detects climate anomalies and quantifies their crop impacts using multi-source signals and probabilistic forecasting.",
     inputs: [
-      "IRENA / OpenEI energy market data",
-      "ERA5 reanalysis weather data for climate dependency",
-      "Policy datasets from World Bank, IEA, IMF",
-      "Economic indicators and renewable capacity records"
+      "Open-Meteo historical & real-time weather",
+      "Sentinel-2 / MODIS NDVI/EVI",
+      "Copernicus soil/terrain",
+      "NewsAPI (free) / FAO bulletins",
+      "EuroCropsML historical crop patterns",
+      "SPI/SPEI climate indices",
+      "NASA FIRMS & global flood datasets",
+      "User extreme-event observations"
     ],
     outputs: [
-      "Regional policy impact heatmaps",
-      "Renewable adoption trend projections",
-      "Pricing curves under policy variations",
-      "Interactive scenario dashboards and textual summaries"
+      "Drought/flood/heatwave anomaly alerts",
+      "Current-crop impact assessment",
+      "Extreme-event trend analysis",
+      "Localized climate risk scores",
+      "SPI/SPEI visualization",
+      "Predictive anomaly alerts",
+      "Yield-link reports"
     ],
     ml: [
-      "RAG-based LLMs for policy analysis",
-      "Temporal Transformer for time-series market forecasting"
+      "RL (ConnectX / MuZero) for strategy simulation",
+      "Multimodal Transformer",
+      "TFT + Informer for anomaly prediction",
+      "Bayesian Ensembles for uncertainty",
+      "MLOps pipeline"
     ],
-    integration: `Merges market and policy datasets with predictive transformers to simulate the impact of new regulations or incentives. 
-It generates dashboards and textual narratives explaining each outcome.`,
+    integration:
+      "Anomaly fusion engine correlates climate, EO, and narrative signals to issue risks with confidence bands.",
     useCases: [
-      "Assessing subsidy-driven adoption rates",
-      "Forecasting energy pricing impacts of policies",
-      "Comparing international energy transition outcomes"
+      "District climate risk briefs",
+      "Crop insurance pre-assessment",
+      "Disaster preparedness"
     ]
   },
 
-  "Climate & Renewable Anomaly Detector": {
-    overview: `Detects abnormal energy patterns caused by environmental or mechanical factors. 
-By comparing expected vs. actual renewable performance, it identifies underperforming assets and climate-driven disruptions.`,
+  "Knowledge Graph of Agro-Events": {
+    overview:
+      "Builds a causal, searchable graph linking crops, pests, climate, genetics, and events for discovery and forecasting.",
     inputs: [
-      "ERA5 / Open-Meteo weather time series",
-      "Sentinel-2 satellite imagery",
-      "Grid and plant-level energy output data",
-      "Disaster datasets (NOAA Storm Events, NASA FIRMS)"
+      "FAO bulletins",
+      "Satellite change events",
+      "Open-Meteo weather streams",
+      "Pest/disease alerts (FAO)",
+      "BrAPI breeding/genetic data",
+      "ESA CCI / GlobeLand30 LULC",
+      "Phenology data",
+      "Local agro events"
     ],
     outputs: [
-      "Anomaly detection maps and severity scales",
-      "Temporal deviation and recovery plots",
-      "Regional impact summaries with cause classification",
-      "Automated SMS/TTS alert notifications"
+      "Interactive event-entity knowledge graph",
+      "Causal insight discovery",
+      "High-risk chain alerts",
+      "Intervention suggestions",
+      "Event-driven scenario predictions",
+      "Searchable event database"
     ],
     ml: [
-      "Temporal GNN for event correlation",
-      "Anomaly Detection Transformer for deviation scoring"
+      "GNN / Graphormer",
+      "Multimodal Transformer",
+      "RL (MuZero) for prioritization",
+      "Real-time MLOps"
     ],
-    integration: `Correlates weather, grid, and imagery data to compute deviation patterns. 
-Identifies whether anomalies stem from environmental, technical, or demand-side issues.`,
+    integration:
+      "Entity extraction and temporal linking over heterogeneous streams populates a living graph for analytics.",
     useCases: [
-      "Fault localization in renewable plants",
-      "Climate-linked outage prediction",
-      "Proactive disaster risk management"
+      "Extension intelligence workbench",
+      "Academic/NGO research mapping",
+      "Policy what-if explorations"
     ]
   },
 
-  "Knowledge Graph of Energy Events": {
-    overview: `Constructs an interconnected knowledge graph linking research papers, policy updates, and grid events. 
-It visualizes relationships between entities to reveal energy transition trends and influences.`,
+  "Market & Policy Trend Simulator": {
+    overview:
+      "Simulates crop prices and policy impacts by blending crop/EO signals, news/policy, and commodity/pricing datasets.",
     inputs: [
-      "arXiv and government research APIs",
-      "Policy databases and event archives",
-      "Grid failure and energy trade datasets",
-      "Wikidata / DBpedia semantic relationships"
+      "Open-Meteo & Sentinel-2 (weather/NDVI changes)",
+      "Feature-3 growth simulations",
+      "FAO market & policy reports",
+      "NewsAPI (free tier)",
+      "Open Food Facts",
+      "World Bank / FAO GIEWS price APIs",
+      "Subsidy / scheme data",
+      "User local prices / farm costs"
     ],
     outputs: [
-      "Interactive energy knowledge graph visualization",
-      "Node-level analytics and importance ranking",
-      "Event propagation timeline",
-      "Semantic summaries and cluster insights"
+      "Local & global price forecasts",
+      "Policy impact simulations",
+      "Supply-demand balance",
+      "Crop profitability analysis",
+      "Scenario-based crop choice",
+      "Market price alerts",
+      "Trend & policy-effect visuals"
     ],
     ml: [
-      "Graph Embedding Models for node representation",
-      "LLM + RAG for document-level summarization"
+      "TFT + N-BEATS for forecasting",
+      "RL (MuZero / Agent57) for crop-market choice",
+      "Anomaly/Bayesian ensembles",
+      "Real-time MLOps"
     ],
-    integration: `Extracts entities from documents using NLP, embeds them in a graph, and connects related energy topics. 
-The resulting graph provides dynamic exploration for policy, research, and event links.`,
+    integration:
+      "Joins agronomic signals with market/policy feeds; outputs forecasts and scenario planners.",
     useCases: [
-      "Energy policy intelligence gathering",
-      "Academic research analysis and clustering",
-      "Knowledge-driven risk and innovation tracking"
+      "Market-led sowing advisories",
+      "Procurement planning",
+      "Policy option evaluation"
     ]
   },
 
-  "Multilingual Energy Assistant": {
-    overview: `A conversational AI assistant that supports both English and Bangla queries. 
-It responds with analytical explanations, visual maps, or TTS outputs for renewable energy insights.`,
+  "Multilingual LLM Agro Assistant": {
+    overview:
+      "Conversational assistant for Bangla/English with map-aware answers, summaries, and downloadable reports.",
     inputs: [
-      "User queries (English/Bangla)",
-      "GeoJSON files or map coordinates",
-      "Energy data from OpenEI / IRENA",
-      "Weather or imagery data (optional visual context)"
+      "User queries (Bangla/English/local terms)",
+      "Optional: Voice input",
+      "Optional: Field boundaries (GeoJSON)",
+      "Sentinel-2 & Open-Meteo contexts",
+      "Ag Data Commons datasets",
+      "User-described crop issues"
     ],
     outputs: [
-      "Multilingual text answers",
-      "Annotated energy and weather maps",
-      "Graphical charts and explanations",
-      "Audio TTS response in preferred language"
+      "Bilingual text/voice answers",
+      "Contextual crop management tips",
+      "Weather/EO summaries",
+      "Pest/disease guides",
+      "Interactive Q&A with local terms",
+      "Personalized recommendations",
+      "Downloadable guidance reports"
     ],
     ml: [
-      "Large Language Model (LLM)",
-      "Vision-Language Model (VLM)",
-      "LangChain Agent Pipeline"
+      "LLM (e.g., LLaMA-3 / GPT-4 fine-tune)",
+      "Multilingual ASR",
+      "Multimodal Transformer",
+      "MLOps for continual learning"
     ],
-    integration: `Integrates natural language understanding and energy databases for bilingual Q&A and map-annotated responses.`,
+    integration:
+      "Lang pipeline grounds LLM responses in spatial/temporal data and domain KB.",
     useCases: [
-      "Interactive renewable energy chatbot",
-      "Voice-based information assistant for field users",
-      "Energy Q&A platform for public awareness"
+      "Hotline/field advisory",
+      "Farmer helpdesk chat",
+      "Voice-first information access"
     ]
   },
 
-  "EV Fleet & Charging Station Optimization": {
-    overview: `Optimizes EV fleet routes and charging schedules using real-time traffic and generation data. 
-It predicts optimal charging points and minimizes energy cost while ensuring fleet utilization efficiency.`,
+  "Crop Yield & Growth Forecasting": {
+    overview:
+      "Predicts crop yield and phenology per field by fusing time-series vegetation, weather, soil and crop-type signals.",
     inputs: [
-      "Fleet operational datasets (routes, battery levels, schedules)",
-      "Open Charge Map API for real-time station metadata",
-      "OpenStreetMap routing and distance data",
-      "Real-time renewable generation and grid load data"
+      "NDVI/EVI time series (Sentinel-2, MODIS, Landsat)",
+      "Open-Meteo forecasts",
+      "Copernicus soil + terrain",
+      "Copernicus crop type",
+      "EuroCropsML / national yields",
+      "LAI / fAPAR / chlorophyll indices",
+      "Crop phenology models",
+      "User cultivation practices"
     ],
     outputs: [
-      "Optimized fleet routing maps",
-      "Charging schedule and cost forecast tables",
-      "Utilization heatmaps and comparative charts",
-      "Scenario simulations for route/fleet scaling"
+      "Field-level yield prediction",
+      "Growth-stage timelines",
+      "Yield deviation alerts",
+      "Zone-specific yield maps",
+      "Yield-improvement recommendations",
+      "Season/farm comparisons"
     ],
-    ml: ["Reinforcement Learning", "Temporal GNN for fleet-state transitions"],
-    integration: `Combines spatial routing optimization with renewable supply forecasting to maximize efficiency.`,
+    ml: [
+      "Multimodal Transformer",
+      "TFT + N-BEATS",
+      "RL (MuZero) for optimization",
+      "GNN for spatial correlation",
+      "Bayesian ensembles",
+      "MLOps pipeline"
+    ],
+    integration:
+      "Automates data fusion and forecasting; surfaces uncertainty and deviations for action.",
     useCases: [
-      "Fleet management optimization",
-      "Charging infrastructure planning",
-      "EV cost reduction strategy development"
+      "Input planning and contracts",
+      "District yield outlooks",
+      "Price risk hedging"
     ]
   },
 
   "Risk & Alert Dashboard": {
-    overview: `Aggregates analytics and alerts from all other EnergyVerse features into a unified visualization dashboard. 
-The system provides real-time monitoring, risk scoring, and predictive summaries for operators.`,
+    overview:
+      "Unifies risks and alerts from all features into interactive maps, charts, and notifications with configurable thresholds.",
     inputs: [
-      "Aggregated data streams from all EnergyVerse modules",
-      "Live satellite and weather feeds (Sentinel, ERA5, Open-Meteo)",
-      "Grid, EV, and market signals from OpenEI / IRENA APIs"
+      "Aggregated outputs from Features 1–9",
+      "Real-time weather & Sentinel-2 feeds",
+      "Copernicus crop/soil maps",
+      "USDA Quick Stats & Open Food Facts",
+      "User: field conditions, community events, emergencies"
     ],
     outputs: [
-      "Multi-source interactive dashboard",
-      "Real-time alerts (grid stress, anomalies, EV peaks)",
-      "Daily/weekly risk summaries with trend analysis",
-      "Downloadable PDF or CSV reports"
+      "Pest/disease/water/market/climate risk scores",
+      "Interactive dashboards (maps/charts/tables)",
+      "Real-time alerts & notifications",
+      "Community-reported event overlays",
+      "Custom thresholds",
+      "Historical trends & projections"
     ],
-    ml: ["LLM-based summarizer", "Dashboard Agent with anomaly clustering"],
-    integration: `All AI outputs are fused into a visual intelligence layer with continuous updates and alert notifications.`,
+    ml: [
+      "RL (ConnectX) for adaptive scoring",
+      "Multimodal fusion",
+      "Concept drift / anomaly detection",
+      "Real-time MLOps"
+    ],
+    integration:
+      "Streams and aggregates all upstream feature signals into a single operator console.",
     useCases: [
-      "Energy risk monitoring center",
-      "Grid operator decision dashboards",
-      "Automated event-driven alert systems"
+      "Ops command center",
+      "Regional early-warning cell",
+      "Program monitoring & evaluation"
     ]
   },
 
-  "Battery / Storage Health Monitoring": {
-    overview: `Monitors energy storage systems and EV battery health to estimate degradation, capacity, and safety indicators. 
-It predicts remaining useful life (RUL) and provides early fault warnings.`,
+  "Soil Nutrient & Fertility Advisor": {
+    overview:
+      "Analyzes soil, weather, vegetation and farmer inputs to recommend balanced, timed fertilizer programs.",
     inputs: [
-      "Battery IoT logs (voltage, current, SOC, temperature)",
-      "Historical charge-discharge datasets",
-      "PV or renewable storage integration data"
+      "Copernicus soil type",
+      "Farmer soil-test reports",
+      "FAO crop nutrient requirements",
+      "Open-Meteo weather",
+      "Optional NDVI/EVI history",
+      "Farmer fertilizer history"
     ],
     outputs: [
-      "Daily SOC and SOH predictions",
-      "RUL estimation and degradation rate curve",
-      "Charge/discharge efficiency analysis",
-      "Anomaly or fault alerts"
+      "Soil nutrient maps (N, P, K, microelements)",
+      "Fertility stress detection",
+      "Dose/timing/method recommendations",
+      "Predicted crop response",
+      "Deficiency alerts",
+      "Temporal nutrient trends"
     ],
-    ml: ["Time-series regression models", "Predictive Maintenance AI"],
-    integration: `Collects IoT and operational logs to predict health and lifecycle of distributed batteries.`,
+    ml: [
+      "Multimodal Transformer",
+      "RL (MuZero) for fertilization planning",
+      "TFT + Neural ODEs (nutrient trends)",
+      "GAN/Diffusion (stress visualization)",
+      "MLOps automation"
+    ],
+    integration:
+      "Prescription engine aligns crop need, soil status, and weather windows.",
     useCases: [
-      "Smart grid battery management",
-      "Battery replacement cost optimization",
-      "Preventive maintenance in EV fleets"
+      "Soil health cards at scale",
+      "Retailer recommendation engines",
+      "Precision input management"
     ]
   },
 
-  "Solar & Wind Asset Predictive Maintenance": {
-    overview: `Predicts potential failures in turbines and panels using environmental and sensor data. 
-Combines vibration, acoustic, and temperature data with satellite images to assess wear patterns.`,
+  "Crop Variety / Breeding Recommendation": {
+    overview:
+      "Recommends climate- and soil-suited varieties using genetics, yield history, and local preferences.",
     inputs: [
-      "IoT sensor data (vibration, temperature, acoustic signatures)",
-      "Satellite imagery for surface condition checks",
-      "PVGIS and Global Wind Atlas irradiance data",
-      "Maintenance history logs"
+      "Crop type (user)",
+      "Open-Meteo local climate",
+      "Copernicus soil type",
+      "Historical yield data",
+      "BrAPI genetic data",
+      "Preferred varieties (user)"
     ],
     outputs: [
-      "Asset failure probability index",
-      "Maintenance schedule optimization",
-      "Component degradation trend visualization",
-      "Geo-mapped high-risk cluster detection"
+      "Variety picks per soil-climate combo",
+      "Expected yield comparison",
+      "Disease-resistance suitability",
+      "Climate-adaptation suitability",
+      "Interactive recommendation dashboard"
     ],
-    ml: ["Predictive Maintenance CNNs", "Anomaly Detection models"],
-    integration: `Merges physical sensor analytics with visual inspection AI to preemptively schedule maintenance.`,
+    ml: [
+      "GNN (genetic + environment)",
+      "RL (MuZero) for selection",
+      "Multimodal Transformer",
+      "MLOps for continuous updating"
+    ],
+    integration:
+      "Scores varieties by local agro-climate and expected performance.",
     useCases: [
-      "Turbine failure prediction",
-      "Solar asset lifetime management",
-      "O&M cost optimization for renewable infrastructure"
+      "Seed advisory & distribution",
+      "Public breeding targeting",
+      "Farmer variety selection"
     ]
   },
 
-  "Renewable Curtailment Analysis & Flexibility": {
-    overview: `Analyzes overproduction and energy curtailment events to optimize load flexibility and reduce waste. 
-Provides actionable recommendations to shift loads or store excess renewable generation.`,
+  "Farmer Community Knowledge Exchange": {
+    overview:
+      "Community hub for observations, alerts, and solutions—augmented with EO overlays and weather context.",
     inputs: [
-      "Historical generation vs. demand data (NREL / OpenEI)",
-      "Open-Meteo forecasts for renewable variability",
-      "Grid load profiles and flexible consumer data"
+      "Farmer observations (text/images)",
+      "Satellite/NDVI overlays",
+      "Pest/disease alerts",
+      "Weather forecasts",
+      "Community comments/alerts"
     ],
     outputs: [
-      "Expected curtailment and energy waste analysis",
-      "Load shifting or battery dispatch suggestions",
-      "Scenario-based curtailment reduction simulations"
+      "Shared observation feeds",
+      "Outbreak alerts",
+      "Collaborative solution threads",
+      "Event maps",
+      "Peer crop-management tips",
+      "Aggregated local best practices"
     ],
-    ml: ["Optimization Models", "Forecasting Transformers"],
-    integration: `Combines historical and forecasted data to detect curtailment risk and propose flexible energy scheduling.`,
+    ml: [
+      "Multimodal Transformer",
+      "GNN (knowledge flow)",
+      "RL (ConnectX) for info routing",
+      "Real-time MLOps"
+    ],
+    integration:
+      "Moderates and enriches user posts with geospatial layers and advisories.",
     useCases: [
-      "Curtailment minimization planning",
-      "Load redistribution for renewables",
-      "Peak shaving strategy design"
+      "Farmer-to-farmer extension",
+      "Rapid local alerting",
+      "Community agronomy knowledge base"
     ]
   },
 
-  "EV Driver Behavior & Incentive Analytics": {
-    overview: `Analyzes EV driver charging behavior to design incentive schemes that promote off-peak usage and load balance. 
-Models how drivers react to price changes and policy incentives.`,
+  "Precision Harvest & Logistics Planner": {
+    overview:
+      "Plans optimal harvest windows and moves resources efficiently using yield/phenology, weather and market signals.",
     inputs: [
-      "EV charging session datasets",
-      "Open Charge Map and OSM traffic data",
-      "Open-Meteo weather data (temperature, rain)",
-      "Incentive policy configurations"
+      "Predicted growth stages (Feature 9)",
+      "Yield forecast",
+      "Weather forecast",
+      "Farm location",
+      "World Bank / Open Food Facts market prices",
+      "Preferred labor/transport resources"
     ],
     outputs: [
-      "Temporal usage patterns and station utilization",
-      "Demand-shift predictions under new incentives",
-      "Optimal reward/incentive recommendations"
+      "Optimal harvest dates",
+      "Labor & resource allocation plans",
+      "Transport route suggestions",
+      "Predicted vs actual yield comparison",
+      "Market-informed prioritization",
+      "Harvest-window alerts",
+      "Printable schedules"
     ],
-    ml: ["Behavioral Modeling", "Reinforcement Learning"],
-    integration: `Uses temporal behavioral data to simulate how incentives alter charging demand curves.`,
+    ml: [
+      "RL (MuZero / Agent57) for timing/resources",
+      "TFT + Informer for harvest timing",
+      "Multimodal Transformer",
+      "MLOps for automation"
+    ],
+    integration:
+      "Synchronizes phenology, logistics and prices to minimize loss and maximize returns.",
     useCases: [
-      "EV policy testing and behavioral simulation",
-      "Dynamic pricing optimization",
-      "Customer engagement program design"
+      "Custom-hiring center ops",
+      "FPO/coop harvest orchestration",
+      "Contract-farming logistics"
     ]
   },
 
-  "DER Integration & Microgrid Simulation": {
-    overview: `Simulates the contribution and coordination of distributed energy resources (DERs) like rooftop solar, batteries, and EV storage. 
-Tests how microgrids perform under varying generation and consumption conditions.`,
+  "Eco-Impact & Sustainability Analyzer": {
+    overview:
+      "Quantifies environmental footprint and suggests lower-input, water-smart practices while tracking long-term soil health.",
     inputs: [
-      "DER datasets (PV, battery, EV storage)",
-      "Microgrid topology and control parameters",
-      "Weather and generation datasets for simulation"
+      "Pesticide/fertilizer use (self-reported or estimated)",
+      "NDVI/LAI",
+      "Optional water-use sensors",
+      "Soil maps",
+      "Climate data",
+      "Planned sustainability practices"
     ],
     outputs: [
-      "Microgrid balance and dispatch simulation charts",
-      "Energy cost and efficiency metrics",
-      "Scenario-based optimization outcomes"
+      "Field/farm eco-footprint",
+      "Sustainability score/rating",
+      "Chemical/water-reduction recommendations",
+      "Long-term soil-health projections",
+      "Carbon-footprint estimation",
+      "Practice comparisons (conventional vs sustainable)"
     ],
-    ml: ["Microgrid Simulation Models", "Optimization Algorithms"],
-    integration: `Models the combined behavior of DER components for efficient and resilient microgrid operation.`,
+    ml: [
+      "Multimodal Transformer",
+      "GAN/Diffusion for impact visualization",
+      "RL (MuZero) for eco strategies",
+      "Continuous MLOps"
+    ],
+    integration:
+      "Maps current practices to footprint and recommends stepwise improvements.",
     useCases: [
-      "DER planning and integration",
-      "Smart neighborhood or campus microgrid testing",
-      "Renewable energy coordination studies"
+      "Sustainability reporting",
+      "Certification readiness",
+      "Program impact tracking"
     ]
   },
 
-  "Renewable Energy CO₂ Impact Dashboard": {
-    overview: `Quantifies the CO₂ emissions avoided through renewable energy usage and policy adoption. 
-Visualizes the contribution of renewables to sustainability goals over time.`,
+  "Extreme Event Simulation & Adaptation": {
+    overview:
+      "Simulates floods/droughts/heatwaves and recommends farm-level adaptation and emergency plans with quantified risk.",
     inputs: [
-      "Renewable generation datasets (solar, wind, EV)",
-      "Grid emission factors from IRENA / OpenEI",
-      "Weather and seasonal context data"
+      "Historical climate events",
+      "NDVI/EVI",
+      "Crop type",
+      "Soil type",
+      "SPI/SPEI indices",
+      "User adaptation/emergency plans"
     ],
     outputs: [
-      "CO₂ emission reduction dashboards",
-      "Regional sustainability scorecards",
-      "Policy comparison visualizations"
+      "Event-impact simulations",
+      "Adaptive management strategies",
+      "Field-level emergency action plans",
+      "Extreme-event risk maps",
+      "Yield-loss projections under scenarios",
+      "Farm resilience scores",
+      "Climate-resilient crop planning"
     ],
-    ml: ["Emission Estimation Models", "Scenario Analysis Transformers"],
-    integration: `Converts renewable generation into quantified CO₂ reduction metrics and compares against baseline fossil fuel data.`,
+    ml: [
+      "RL (MuZero / ConnectX)",
+      "Multimodal Transformer",
+      "TFT + Neural ODEs",
+      "Bayesian ensemble for uncertainty",
+      "MLOps for automated simulations"
+    ],
+    integration:
+      "Scenario engine perturbs climate variables and computes impacts with uncertainty bounds.",
     useCases: [
-      "Corporate sustainability reporting",
-      "Carbon footprint monitoring",
-      "National emission reduction tracking"
-    ]
-  },
-
-  "Real-Time Fault / Anomaly Explanation": {
-    overview: `Provides explainable insights for detected faults or anomalies across solar, wind, grid, and EV systems. 
-It identifies the root cause of faults using multimodal correlation across data streams.`,
-    inputs: [
-      "IoT sensor logs from grid, solar, or EV assets",
-      "Satellite imagery from Sentinel for context verification",
-      "Weather datasets for external factor correlation",
-      "Grid operational datasets"
-    ],
-    outputs: [
-      "Fault location and severity maps",
-      "Cause explanation and confidence level",
-      "Impact forecasting and mitigation advice",
-      "Auto-generated notification summaries"
-    ],
-    ml: ["Explainable AI (XAI)", "Multimodal Causal Transformer"],
-    integration: `Fuses multimodal signals (IoT, imagery, climate) to explain fault causes and predict possible cascading failures.`,
-    useCases: [
-      "Real-time alert and diagnostics systems",
-      "Root-cause analysis for renewable disruptions",
-      "Maintenance prioritization based on severity"
+      "Contingency planning",
+      "Insurance and relief targeting",
+      "Climate-resilient design"
     ]
   }
 };
+
+export default featureDocs;
+
+// Optional helper if your docs page uses router state like { state: { feature: title } }
+export const getFeatureDoc = (title) => featureDocs[title] || null;

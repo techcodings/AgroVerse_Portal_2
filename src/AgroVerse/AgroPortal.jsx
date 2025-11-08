@@ -6,7 +6,7 @@ import {
   Search, Filter, ArrowRight, Play, Bell, Code, MapPin, LineChart, Shield, 
   Cpu, Cloud, Box, GitBranch, LogOut, User, LayoutDashboard, MessageSquare, Download
 } from 'lucide-react';
-import './VersePortal.css';
+import './AgroPortal.css';
 import Auth from '../components/Auth';
 import FeatureDocsModal from "../components/FeatureDocsModal"; // ✅ Added import
 import { auth, db } from '../config/firebase';
@@ -16,59 +16,250 @@ import { Link } from "react-router-dom";
 
 
 
-// Complete feature data with all 17 features (Keep this section unchanged)
+// Complete feature data with all 16 AgroVerse features
 const allFeatures = [
     {
         id: 1,
-        title: 'Solar Panel Health & Efficiency Monitoring',
-        icon: Sun,
-        category: 'Solar & Renewable Monitoring',
-        color: 'yellow-orange',
-        desc: 'Real-time thermal/efficiency analysis with fault detection',
-        inputs: ['Sentinel-2/Landsat Imagery', 'IoT Sensor Streams', 'PVGIS Solar Irradiance', 'Open-Meteo Weather'],
-        outputs: ['Thermal/Efficiency Heatmap', 'Fault Alerts', 'Predicted Daily Output', 'Time-lapse Evolution'],
-        ml: ['ViT', 'Temporal Fusion Transformer', 'Anomaly Detection'],
-        datasets: ['Sentinel-2', 'PVGIS', 'Open-Meteo', 'IoT Sensors'],
+        title: 'Crop Health Intelligence',
+        icon: Leaf,
+        category: 'Field Monitoring',
+        color: 'green-emerald',
+        desc: 'Real-time analysis of crop health using satellite and weather data.',
+        inputs: ['Sentinel-2 NDVI/EVI', 'MODIS NDVI/EVI', 'Landsat-8/9 NDVI/EVI', 'Soil-adjusted indices (SAVI, MSAVI)', 'Weather (Open-Meteo)', 'Terrain/elevation (Open-Elevation)', 'Soil type (Copernicus)', 'Irrigation coverage (FAO AQUASTAT)', 'Regional agricultural statistics (USDA Quick Stats)', 'Optional field boundaries (GeoJSON)', 'Observation notes / field photos'],
+        outputs: ['Field-level vegetation health maps', 'Stress detection: water, nutrient, disease', 'Temporal crop health trends', 'Field segmentation for management zones', 'Irrigation, fertilization, pesticide recommendations', 'Alerts for sudden drops in vegetation indices', 'Printable reports with annotated maps'],
+        ml: ['Multimodal Transformer (Perceiver IO)', 'GAN / Diffusion Hybrid', 'RL (MuZero)', 'Temporal Forecasting: TFT + N-BEATS', 'GNN', 'End-to-End MLOps pipeline'],
+        datasets: ['Sentinel-2', 'MODIS', 'Landsat-8/9', 'Open-Meteo', 'Copernicus', 'FAO AQUASTAT', 'USDA Quick Stats'],
         integration: 'Backend + User Input',
-         demoUrl:"https://solar-heath-efficiency-monitoring.netlify.app/",
-        tags: ['Monitoring', 'Solar', 'AI', 'Real-time']
+        demoUrl: "",
+        tags: ['Crop Health', 'Monitoring', 'AI', 'Satellite']
     },
-   {
-    id: 2,
-    title: 'Solar & Wind Power Generation Forecast',
-    icon: Wind,
-    category: 'Energy Forecasting & Optimization',
-    color: 'blue-cyan',
-    desc: '7-day generation predictions with confidence intervals',
-    inputs: ['Open-Meteo Weather', 'NREL/OpenEI Historical Data', 'PVGIS & Global Wind Atlas'],
-    outputs: ['7-day Forecast', 'Peak Hour Analysis', 'Animated Regional Map', 'Confidence Intervals'],
-    ml: ['Temporal Fusion Transformer', 'GNN'],
-    datasets: ['Open-Meteo', 'NREL', 'Global Wind Atlas'],
-    integration: 'Backend',
-
-    // ✅ Add this line
-    demoUrl: "https://solar-wind-power.netlify.app/",
-
-    tags: ['Forecasting', 'Solar', 'Wind', 'Prediction']
-},
-
-
-    { id: 3, title: 'EV Charging Demand Prediction', icon: Battery, category: 'EV & Grid Management', color: 'green-emerald', desc: 'Regional demand heatmaps with peak load predictions', inputs: ['EV Registration Data', 'Open Charge Map', 'OSM Road Network', 'Historical Usage'], outputs: ['Demand Heatmap', 'Peak Load Predictions', 'Scenario Simulations', 'TTS Alerts'], ml: ['LSTM', 'Graph Transformer', 'Multimodal Fusion'], datasets: ['Open Charge Map', 'OpenStreetMap', 'Open-Meteo'], integration: 'Backend + User Input',demoUrl:"https://ev-charging-pred.netlify.app/", tags: ['EV', 'Prediction', 'Grid', 'Demand'] },
-    { id: 4, title: 'Grid & Microgrid Optimization Advisor', icon: Zap, category: 'Energy Forecasting & Optimization', color: 'emerald-teal', desc: 'Load balancing and battery storage scheduling', inputs: ['Real-time Solar/Wind Generation', 'EV Demand', 'Grid Topology', 'Energy Pricing'], outputs: ['Load Balancing Charts', 'Battery Schedule', 'Grid Stress Metrics', 'Scenario Simulations'], ml: ['Reinforcement Learning', 'Multimodal Transformer'], datasets: ['OPSD', 'ENTSO-E', 'Electricity Maps'], integration: 'Backend + User Input',demoUrl: "https://grid-optimization.netlify.app/", tags: ['Grid', 'Optimization', 'Battery', 'AI'] },
-    { id: 5, title: 'Energy Market & Policy Impact Simulator', icon: TrendingUp, category: 'Energy Forecasting & Optimization', color: 'indigo-purple', desc: 'Policy scenarios and supply/demand projections', inputs: ['Historical Market Data', 'Policy Reports', 'Satellite Imagery', 'ERA5 Weather'], outputs: ['Policy Impact Maps', 'Pricing Projections', 'Scenario Dashboards', 'Text Summaries'], ml: ['RAG', 'LLM', 'Temporal Transformer'], datasets: ['IRENA', 'OpenEI', 'World Bank', 'IEA'], integration: 'Backend + User Input',demoUrl:"https://energy-markets.netlify.app/", tags: ['Market', 'Policy', 'Economics', 'Simulation'] },
-    { id: 6, title: 'Climate & Renewable Anomaly Detector', icon: AlertTriangle, category: 'Solar & Renewable Monitoring', color: 'red-pink', desc: 'Abnormal generation detection with severity ranking', inputs: ['Real-time Weather', 'Satellite Imagery', 'Grid Output Data', 'Climate Event Streams'], outputs: ['Anomaly Heatmaps', 'Temporal Plots', 'Severity Rankings', 'Automated Alerts'], ml: ['Temporal GNN', 'Anomaly Detection Transformer'], datasets: ['Sentinel-2', 'ERA5', 'NASA FIRMS', 'NOAA'], integration: 'Backend',demoUrl:"https://climate-renewable-detect.netlify.app/", tags: ['Anomaly', 'Climate', 'Detection', 'Alerts'] },
-    { id: 7, title: 'Knowledge Graph of Energy Events', icon: GitBranch, category: 'Analytics & Intelligence', color: 'violet-purple', desc: 'Interactive event networks with timeline analysis', inputs: ['Research Papers', 'Grid Events', 'Policy Information', 'Government APIs'], outputs: ['Interactive Graph', 'Event Timelines', 'Node Summaries', 'Network Metrics'], ml: ['RAG', 'Graph Embedding', 'LLM'], datasets: ['arXiv', 'Government APIs', 'Wikidata'], integration: 'Backend + User Upload', tags: ['Knowledge Graph', 'Events', 'Research', 'AI'] },
-    { id: 8, title: 'Multilingual Energy Assistant', icon: MessageSquare, category: 'Analytics & Intelligence', color: 'pink-rose', desc: 'English/Bangla AI assistant with visual analytics', inputs: ['Text Queries (English/Bangla)', 'Satellite Images', 'Grid Maps', 'OpenEI/IRENA Data'], outputs: ['Text Answers', 'Annotated Maps', 'Interactive Charts', 'TTS Audio'], ml: ['LLM', 'Vision-Language Model', 'LangChain Agents'], datasets: ['OpenEI', 'IRENA', 'BanglaBERT'], integration: 'Backend + User Input',demoUrl:"https://multilingual-energy-assistant.netlify.app/", tags: ['AI Assistant', 'Multilingual', 'NLP', 'Interactive'] },
-    { id: 9, title: 'EV Fleet & Charging Station Optimization', icon: Activity, category: 'EV & Grid Management', color: 'blue-indigo', desc: 'Optimal routing and charging schedules for fleets', inputs: ['EV Fleet Data', 'Open Charge Map', 'OSM Networks', 'Real-time Generation'], outputs: ['Routing Maps', 'Fleet Utilization', 'Schedule Tables', 'Cost Predictions'], ml: ['Reinforcement Learning', 'Temporal GNN'], datasets: ['Open Charge Map', 'GTFS', 'HERE Routing'], integration: 'Backend + User Upload',demoUrl:"https://ev-fleet-charging-stations.netlify.app/", tags: ['EV', 'Fleet', 'Routing', 'Optimization'] },
-    { id: 10, title: 'Risk & Alert Dashboard', icon: Shield, category: 'Risk Management', color: 'red-orange', desc: 'Unified risk monitoring with real-time notifications', inputs: ['Aggregated Feature Outputs', 'Satellite Feeds', 'Grid Maps', 'Market Data'], outputs: ['Interactive Dashboard', 'Risk Scores', 'Time Series Graphs', 'Push Notifications'], ml: ['LLM', 'Dashboard Agent', 'Multimodal Fusion'], datasets: ['Sentinel-2', 'OpenEI', 'IRENA', 'Twilio'], integration: 'Backend Aggregation',demoUrl:"https://risk-alert-dashboards.netlify.app/", tags: ['Risk', 'Dashboard', 'Alerts', 'Monitoring'] },
-    { id: 11, title: 'Battery / Storage Health Monitoring', icon: Battery, category: 'Analytics & Intelligence', color: 'amber-yellow', desc: 'SOC/SOH predictions with degradation tracking', inputs: ['Battery Logs (SOC/Voltage/Current)', 'Historical Battery Data', 'PV Storage Output'], outputs: ['SOC/SOH Predictions', 'RUL Estimates', 'Fault Probability', 'Performance Summary'], ml: ['Time Series Analysis', 'Predictive Models'], datasets: ['Open EV BMS', 'IoT Battery Logs'], integration: 'Backend + User Input',demoUrl:"https://battery-storage-monitor.netlify.app/", tags: ['Battery', 'Health', 'Storage', 'Prediction'] },
-    { id: 12, title: 'Solar & Wind Asset Predictive Maintenance', icon: Settings, category: 'Solar & Renewable Monitoring', color: 'purple-indigo', desc: 'Failure prediction and maintenance prioritization', inputs: ['IoT Sensor Streams', 'Satellite Imagery', 'PVGIS Data', 'Weather Correlation'], outputs: ['Failure Probability', 'Maintenance Priority', 'Efficiency Drop', 'Risk Clusters'], ml: ['Predictive Maintenance Models', 'Anomaly Detection'], datasets: ['Sentinel-2', 'PVGIS', 'Global Wind Atlas'], integration: 'Backend + User Input',demoUrl:"https://solar-wind-assest-predictive.netlify.app/", tags: ['Maintenance', 'Predictive', 'Assets', 'Solar'] },
-    { id: 13, title: 'Renewable Curtailment Analysis & Flexibility', icon: BarChart3, category: 'Energy Forecasting & Optimization', color: 'cyan-blue', desc: 'Curtailment reduction and flexible load optimization', inputs: ['Generation vs Demand', 'Weather Forecasts', 'Grid Load Profiles', 'Flexible Load Options'], outputs: ['Excess Generation Analysis', 'Curtailment Predictions', 'Cost Savings', 'Mitigation Actions'], ml: ['Optimization Algorithms', 'Scenario Analysis'], datasets: ['NREL', 'OpenEI', 'OPSD', 'PVGIS'], integration: 'Backend + User Input',demoUrl:"https://renewable-curtailment-analysis.netlify.app/", tags: ['Curtailment', 'Flexibility', 'Optimization', 'Grid'] },
-    { id: 14, title: 'EV Driver Behavior & Incentive Analytics', icon: Users, category: 'EV & Grid Management', color: 'orange-red', desc: 'Usage patterns and incentive strategy recommendations', inputs: ['EV Mobility Datasets', 'Charging Station Data', 'Road Networks', 'Weather Effects'], outputs: ['Charging Patterns', 'Peak Usage Analysis', 'Incentive Strategies', 'Demand Shifts'], ml: ['Behavior Analysis', 'Recommendation Systems'], datasets: ['Open Charge Map', 'OSM', 'Mobility Data'], integration: 'Backend + User Input',demoUrl:"https://ev-behaviour-dashboard.netlify.app/", tags: ['EV', 'Behavior', 'Analytics', 'Incentives'] },
-    { id: 15, title: 'DER Integration & Microgrid Simulation', icon: Database, category: 'Energy Forecasting & Optimization', color: 'teal-green', desc: 'Distributed energy resource management and optimization', inputs: ['Rooftop PV Generation', 'Home Battery Logs', 'EV Fleet Data', 'Microgrid Topology'], outputs: ['DER Contribution', 'Load vs Generation', 'Energy Balance', 'Dispatch Schedule'], ml: ['Microgrid Simulation', 'Optimization'], datasets: ['PVGIS', 'Battery Logs', 'EV Data'], integration: 'Backend + User Input',demoUrl:"https://der-microgrid-dashboard.netlify.app/", tags: ['DER', 'Microgrid', 'Simulation', 'Integration'] },
-    { id: 16, title: 'Renewable Energy CO₂ Impact Dashboard', icon: Leaf, category: 'Analytics & Intelligence', color: 'green-dark', desc: 'Emissions tracking and environmental impact analysis', inputs: ['Generation Data', 'Grid Emission Factors', 'Weather Data', 'Regional Analysis'], outputs: ['CO₂ Savings', 'Renewable Share', 'Emission Reduction', 'Policy Impact'], ml: ['Impact Analysis', 'Scenario Modeling'], datasets: ['OpenEI', 'IRENA', 'Open-Meteo'], integration: 'Backend + User Input',demoUrl:"https://renewable-energy-co2-dashboard.netlify.app/", tags: ['CO₂', 'Environment', 'Impact', 'Dashboard'] },
-    { id: 17, title: 'Real-Time Fault / Anomaly Explanation', icon: Cpu, category: 'Risk Management', color: 'rose-pink', desc: 'Automated fault detection with cause analysis', inputs: ['Sensor Logs', 'Satellite Imagery', 'Weather Data', 'Grid Data'], outputs: ['Anomaly Location', 'Severity Ranking', 'Cause Analysis', 'Mitigation Actions'], ml: ['Explainable AI', 'Fault Detection'], datasets: ['IoT Sensors', 'Sentinel-2', 'OpenEI'], integration: 'Backend + User Input',demoUrl:"", tags: ['Fault', 'Anomaly', 'Explanation', 'Real-time'] }
+    {
+        id: 2,
+        title: 'Pest & Disease Early Warning',
+        icon: AlertTriangle,
+        category: 'Field Monitoring',
+        color: 'red-pink',
+        desc: 'Early warning system for pest and disease outbreaks.',
+        inputs: ['Sentinel-2 NDVI/LAI', 'MODIS LAI', 'Weather (Open-Meteo)', 'FAO bulletins', 'Twitter/X API (free tier)', 'Plant data (Perenual API)', 'Land-use maps (OpenStreetMap)', 'Optional local agricultural extension data', 'Pest sightings'],
+        outputs: ['Pest/disease risk heatmaps', 'Outbreak probability per crop', 'Species-specific pest/disease alerts', 'Trend analysis of occurrences', 'Suggested control measures', 'Community notifications and alerts', 'Reports for agricultural extension workers'],
+        ml: ['Multimodal Transformer', 'RL (DreamerV3)', 'GNN', 'End-to-End MLOps'],
+        datasets: ['Sentinel-2', 'MODIS', 'Open-Meteo', 'FAO', 'Twitter/X', 'OpenStreetMap'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Pest', 'Disease', 'Warning', 'AI']
+    },
+    {
+        id: 3,
+        title: 'Generative Future Crop Visualization',
+        icon: TrendingUp,
+        category: 'Forecasting & Simulation',
+        color: 'blue-cyan',
+        desc: 'Simulate future crop growth and rotation scenarios.',
+        inputs: ['Historical NDVI/EVI', 'Landsat-8/9 NDVI', 'MODIS NDVI/EVI', 'Weather forecast (Open-Meteo)', 'Terrain + soil (Copernicus)', 'Crop rotation/planting schedule datasets', 'Ag Data Commons datasets', 'Crop rotation plan / planting schedule'],
+        outputs: ['Simulated crop growth imagery', 'Multi-season crop rotation simulations', 'Growth stage predictions', '“What-if” scenario visualizations', 'Crop selection suggestions', 'Recommended optimal planting schedule'],
+        ml: ['One-Shot GAN / Diffusion Hybrid', 'RL (MuZero)', 'Temporal Forecasting: TFT + Informer', 'End-to-End MLOps'],
+        datasets: ['Landsat-8/9', 'MODIS', 'Open-Meteo', 'Copernicus', 'Ag Data Commons'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Simulation', 'Generative AI', 'Forecasting']
+    },
+    {
+        id: 4,
+        title: 'Water Stress & Irrigation Advisor',
+        icon: Sun,
+        category: 'Field Monitoring',
+        color: 'yellow-orange',
+        desc: 'Optimize irrigation schedules based on water stress models.',
+        inputs: ['NDVI & soil moisture (Copernicus, SMAP/ESA CCI)', 'Rainfall & humidity (Open-Meteo)', 'Terrain slope/aspect (Open-Elevation)', 'Crop type maps (Copernicus)', 'Irrigation cost data (USDA ARMS)', 'ETa maps from MODIS', 'Groundwater table depth', 'Field conditions', 'Irrigation type / method'],
+        outputs: ['Soil moisture maps', 'Water stress levels per field/crop', 'Irrigation scheduling & optimization', 'Cost-benefit analysis of irrigation strategies', 'Evapotranspiration maps', 'Rainfall deficit alerts', 'Recommended irrigation methods'],
+        ml: ['RL (MuZero)', 'Multimodal Transformer', 'PINN', 'Temporal Forecasting: TFT + Neural ODEs', 'End-to-End MLOps'],
+        datasets: ['Copernicus', 'SMAP', 'Open-Meteo', 'Open-Elevation', 'USDA ARMS', 'MODIS'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Water', 'Irrigation', 'Optimization', 'AI']
+    },
+    {
+        id: 5,
+        title: 'Climate Impact & Anomaly Detector',
+        icon: Globe,
+        category: 'Analytics & Intelligence',
+        color: 'blue-indigo',
+        desc: 'Detects climate anomalies and assesses impact on crops.',
+        inputs: ['Historical & real-time weather (Open-Meteo)', 'NDVI/EVI (Sentinel-2, MODIS)', 'Soil/terrain (Copernicus)', 'NewsAPI free tier / FAO bulletins', 'Historical crop patterns (EuroCropsML)', 'Climate indices (SPI, SPEI)', 'Extreme events datasets (NASA FIRMS)', 'Observations of local extreme events'],
+        outputs: ['Climate anomaly alerts (drought, flood, heatwave)', 'Impact assessment on current crops', 'Trend analysis of extreme events', 'Localized climate risk scores', 'SPI/SPEI temporal visualization', 'Predictive alerts for upcoming anomalies', 'Reports linking climate anomalies to crop yield'],
+        ml: ['RL (ConnectX / MuZero)', 'Multimodal Transformer', 'Temporal Forecasting: TFT + Informer', 'Bayesian Ensembles', 'End-to-End MLOps pipeline'],
+        datasets: ['Open-Meteo', 'Sentinel-2', 'MODIS', 'Copernicus', 'NewsAPI', 'EuroCropsML', 'NASA FIRMS'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Climate', 'Anomaly', 'Risk', 'Impact']
+    },
+    {
+        id: 6,
+        title: 'Knowledge Graph of Agro-Events',
+        icon: GitBranch,
+        category: 'Analytics & Intelligence',
+        color: 'violet-purple',
+        desc: 'Interactive knowledge graph linking all agricultural events.',
+        inputs: ['FAO bulletins', 'Satellite imagery changes', 'Weather streams (Open-Meteo)', 'Pest/disease alerts (FAO bulletins)', 'Crop breeding/genetic data (BrAPI)', 'Land Use/Land Cover datasets (ESA CCI)', 'Remote sensing-derived phenology data', 'Local agricultural events'],
+        outputs: ['Visual knowledge graph linking events, crops, pests, climate', 'Insights into causal relationships', 'Alerts for high-risk event chains', 'Intervention strategy suggestions', 'Event-driven scenario predictions', 'Searchable database of agro-events'],
+        ml: ['Graph Neural Network / Graphormer', 'Multimodal Transformer', 'RL (MuZero)', 'End-to-End MLOps'],
+        datasets: ['FAO', 'Sentinel-2', 'Open-Meteo', 'BrAPI', 'ESA CCI'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Knowledge Graph', 'Events', 'AI', 'GNN']
+    },
+    {
+        id: 7,
+        title: 'Market & Policy Trend Simulator',
+        icon: TrendingUp,
+        category: 'Forecasting & Simulation',
+        color: 'indigo-purple',
+        desc: 'Simulates market trends and policy impacts on crop prices.',
+        inputs: ['Weather & NDVI changes (Open-Meteo, Sentinel-2)', 'Crop growth simulations', 'FAO market & policy reports', 'NewsAPI free tier', 'Open Food Facts API', 'Commodity price APIs (World Bank, FAO GIEWS)', 'Subsidy/government scheme data', 'Local market prices / farm-level costs'],
+        outputs: ['Crop price forecasts (local & global)', 'Policy impact simulations', 'Supply-demand balance predictions', 'Profitability analysis per crop/season', 'Scenario-based crop choice recommendations', 'Market price alerts', 'Visualization of trends & policy effects'],
+        ml: ['Temporal Fusion Transformer + N-BEATS', 'RL (MuZero / Agent57)', 'Anomaly Detection / Bayesian Ensembles', 'End-to-End MLOps'],
+        datasets: ['Open-Meteo', 'Sentinel-2', 'FAO', 'NewsAPI', 'Open Food Facts', 'World Bank'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Market', 'Policy', 'Economics', 'Simulation']
+    },
+    {
+        id: 8,
+        title: 'Multilingual LLM Agro Assistant',
+        icon: MessageSquare,
+        category: 'Analytics & Intelligence',
+        color: 'pink-rose',
+        desc: 'AI assistant for agro queries in English and Bangla.',
+        inputs: ['Text queries (Bangla, English, local terms)', 'Optional voice input', 'Optional field boundaries (GeoJSON)', 'Satellite/weather maps (Sentinel-2, Open-Meteo)', 'Ag Data Commons datasets', 'Crop issues or local conditions'],
+        outputs: ['Text/voice-based advice in multiple languages', 'Contextual crop management recommendations', 'Summarized weather & satellite insights', 'Pest/disease identification guides', 'Interactive Q&A with local terminology', 'Personalized recommendations', 'Downloadable guidance reports'],
+        ml: ['Large LLM (LLaMA 3 / GPT-4 fine-tuned)', 'Multi-lingual ASR', 'Multimodal Transformer', 'End-to-End MLOps'],
+        datasets: ['Sentinel-2', 'Open-Meteo', 'Ag Data Commons', 'Internal Knowledge Base'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['AI Assistant', 'LLM', 'Multilingual', 'NLP']
+    },
+    {
+        id: 9,
+        title: 'Crop Yield & Growth Forecasting',
+        icon: LineChart,
+        category: 'Forecasting & Simulation',
+        color: 'cyan-blue',
+        desc: 'Forecast crop yield and growth stages per field.',
+        inputs: ['NDVI/EVI time series (Sentinel-2, MODIS, Landsat)', 'Weather forecasts (Open-Meteo)', 'Soil + terrain (Copernicus)', 'Crop type mapping (Copernicus)', 'Historical yield data (EuroCropsML, national statistics)', 'Remote sensing indices (LAI, fAPAR)', 'Crop-specific phenology models', 'Local cultivation practices'],
+        outputs: ['Predicted yield per field & crop', 'Growth stage timelines', 'Yield deviation alerts', 'Zone-specific yield maps', 'Recommendations to improve yield', 'Comparative analysis across seasons/farms'],
+        ml: ['Multimodal Transformer', 'Temporal Forecasting: TFT + N-BEATS', 'RL (MuZero)', 'GNN', 'Bayesian Ensembles', 'End-to-End MLOps pipeline'],
+        datasets: ['Sentinel-2', 'MODIS', 'Landsat', 'Open-Meteo', 'Copernicus', 'EuroCropsML'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Yield', 'Forecasting', 'AI', 'Growth']
+    },
+    {
+        id: 10,
+        title: 'Risk & Alert Dashboard',
+        icon: Shield,
+        category: 'Analytics & Intelligence',
+        color: 'red-orange',
+        desc: 'Unified dashboard for all farm-related risks and alerts.',
+        inputs: ['Aggregated outputs from Features 1–9', 'Real-time weather & satellite feeds (Open-Meteo, Sentinel-2)', 'Crop type & soil maps (Copernicus)', 'USDA Quick Stats & Open Food Facts API', 'Field conditions', 'Community pest/disease events', 'Local emergency events / irrigation problems'],
+        outputs: ['Aggregated risk scores: pest, disease, water, market, climate', 'Interactive dashboards: maps, charts, tables', 'Real-time alerts & notifications', 'Community-reported event visualization', 'Customizable alert thresholds', 'Historical risk trends & projections'],
+        ml: ['RL (ConnectX)', 'Multimodal Transformer', 'Concept Drift / Anomaly Detection', 'End-to-End MLOps'],
+        datasets: ['Open-Meteo', 'Sentinel-2', 'Copernicus', 'USDA', 'Open Food Facts', 'User Reports'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Risk', 'Dashboard', 'Alerts', 'Monitoring']
+    },
+    {
+        id: 11,
+        title: 'Soil Nutrient & Fertility Advisor',
+        icon: Database,
+        category: 'Field Monitoring',
+        color: 'amber-yellow',
+        desc: 'Analyzes soil data to recommend fertilizer and nutrients.',
+        inputs: ['Soil type (Copernicus)', 'Farmer soil test reports', 'Crop nutrient requirement datasets (FAO)', 'Weather (Open-Meteo)', 'Optional NDVI/EVI historical data', 'Fertilizer usage history'],
+        outputs: ['Soil nutrient maps (N, P, K, microelements)', 'Fertility stress detection', 'Fertilizer recommendations (dose, timing, method)', 'Predicted crop response to fertilization', 'Nutrient deficiency alerts', 'Temporal nutrient trend comparison'],
+        ml: ['Multimodal Transformer', 'RL (MuZero)', 'Temporal Forecasting: TFT + Neural ODEs', 'GAN / Diffusion', 'End-to-End MLOps'],
+        datasets: ['Copernicus', 'FAO', 'Open-Meteo', 'User Reports'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Soil', 'Nutrients', 'Fertilizer', 'AI']
+    },
+    {
+        id: 12,
+        title: 'Crop Variety / Breeding Recommendation',
+        icon: Settings,
+        category: 'Analytics & Intelligence',
+        color: 'purple-indigo',
+        desc: 'Recommends optimal crop varieties based on genetics and climate.',
+        inputs: ['Crop type', 'Local climate (Open-Meteo)', 'Soil type (Copernicus)', 'Historical yield data', 'Genetic data (BrAPI)', 'Preferred crop varieties'],
+        outputs: ['Recommended crop varieties per soil-climate combo', 'Expected yield comparison', 'Disease resistance suitability', 'Climate adaptation suitability', 'Interactive variety recommendation dashboard'],
+        ml: ['Graph Neural Network', 'RL (MuZero)', 'Multimodal Transformer', 'End-to-End MLOps'],
+        datasets: ['Open-Meteo', 'Copernicus', 'BrAPI', 'Historical Yield Data'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Crops', 'Genetics', 'Recommendation', 'GNN']
+    },
+    {
+        id: 13,
+        title: 'Farmer Community Knowledge Exchange',
+        icon: Users,
+        category: 'Analytics & Intelligence',
+        color: 'orange-red',
+        desc: 'A platform for farmers to share knowledge and alerts.',
+        inputs: ['Farmer-submitted observations (text, images)', 'Satellite/NDVI overlays', 'Pest/disease alerts', 'Weather forecasts', 'Community alerts / comments'],
+        outputs: ['Shared community observations', 'Pest/disease outbreak alerts', 'Collaborative problem-solving threads', 'Interactive maps of community-reported events', 'Crop management tips from peers', 'Aggregated local best practices'],
+        ml: ['Multimodal Transformer', 'GNN', 'RL (ConnectX)', 'End-to-End MLOps'],
+        datasets: ['User Reports', 'Sentinel-2', 'Open-Meteo'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Community', 'Farmer', 'Knowledge', 'Social']
+    },
+    {
+        id: 14,
+        title: 'Precision Harvest & Logistics Planner',
+        icon: MapPin,
+        category: 'Forecasting & Simulation',
+        color: 'teal-green',
+        desc: 'Plan optimal harvest dates and logistics.',
+        inputs: ['Predicted crop growth stages', 'Yield forecast', 'Weather forecast', 'Farm location', 'Market price data (World Bank / Open Food Facts)', 'Preferred harvest labor / transport resources'],
+        outputs: ['Optimal harvest dates', 'Labor & resource allocation plans', 'Transportation route suggestions', 'Predicted harvest vs actual yield comparison', 'Market-informed harvest prioritization', 'Alerts for harvest window closure', 'Printable harvest & logistics schedules'],
+        ml: ['RL (MuZero / Agent57)', 'Temporal Forecasting: TFT + Informer', 'Multimodal Transformer', 'End-to-End MLOps'],
+        datasets: ['Open-Meteo', 'World Bank', 'Open Food Facts', 'User Inputs'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Harvest', 'Logistics', 'Planning', 'Optimization']
+    },
+    {
+        id: 15,
+        title: 'Eco-Impact & Sustainability Analyzer',
+        icon: Leaf,
+        category: 'Field Monitoring',
+        color: 'green-dark',
+        desc: 'Analyze the environmental footprint and sustainability of farm practices.',
+        inputs: ['Pesticide/fertilizer use', 'NDVI/LAI', 'Water use (optional sensors)', 'Soil maps', 'Climate data', 'Planned sustainability practices'],
+        outputs: ['Environmental footprint per field/farm', 'Sustainability scoring / rating', 'Recommendations to reduce chemical/water use', 'Long-term soil health projections', 'Carbon footprint estimation', 'Suggested eco-friendly practices', 'Impact comparison (conventional vs sustainable methods)'],
+        ml: ['Multimodal Transformer', 'GAN / Diffusion', 'RL (MuZero)', 'End-to-End MLOps'],
+        datasets: ['Sentinel-2', 'Copernicus', 'Open-Meteo', 'User Reports'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Sustainability', 'Eco', 'Impact', 'Carbon']
+    },
+    {
+        id: 16,
+        title: 'Extreme Event Simulation & Adaptation',
+        icon: AlertTriangle,
+        category: 'Forecasting & Simulation',
+        color: 'rose-pink',
+        desc: 'Simulate extreme events and plan adaptation strategies.',
+        inputs: ['Historical climate events', 'NDVI/EVI', 'Crop type', 'Soil type', 'SPI/SPEI indices', 'Local adaptation measures / emergency plans'],
+        outputs: ['Simulated impact of floods, droughts, heatwaves', 'Adaptive management strategies', 'Emergency action plans per field', 'Risk maps for extreme events', 'Predicted crop yield loss under various scenarios', 'Resilience scores per farm', 'Recommendations for climate-resilient crop planning'],
+        ml: ['RL (MuZero / ConnectX)', 'Multimodal Transformer', 'Temporal Forecasting: TFT + Neural ODEs', 'Bayesian Ensemble', 'End-to-End MLOps'],
+        datasets: ['Open-Meteo', 'Sentinel-2', 'Copernicus', 'Climate Indices', 'User Plans'],
+        integration: 'Backend + User Input',
+        demoUrl: "",
+        tags: ['Risk', 'Simulation', 'Climate', 'Adaptation']
+    }
 ];
+
 
 // Group features by category
 const featureCategories = allFeatures.reduce((acc, feature) => {
@@ -145,11 +336,11 @@ const Header = ({ mobileMenuOpen, setMobileMenuOpen, setShowSearch, onUserButton
         <div className="header-content">
           <div className="header-logo">
             <div className="logo-icon">
-              <Zap className="icon" />
+              <Leaf className="icon" /> {/* Changed icon to Leaf */}
             </div>
             <div className="logo-text">
-              <h1>EnergyVerse </h1>
-              <p>AI-Powered Energy Platform</p>
+              <h1>AgroVerse</h1> {/* Changed Title */}
+              <p>AI-Powered Agriculture Platform</p> {/* Changed Subtitle */}
             </div>
           </div>
 
@@ -230,18 +421,18 @@ const Hero = () => {
       <div className="hero-content">
         <div className="hero-badge">
           <span className="pulse-dot"></span>
-          <span>17 AI-Powered Features • 50+ Data Sources • 12+ ML Models</span>
+          <span>16 AI-Powered Features • 40+ Data Sources • 10+ ML Models</span> {/* Changed stats */}
         </div>
 
         <h1 className="hero-title">
           The Future of<br />
-          <span className="gradient-text">Renewable Energy Intelligence</span>
+          <span className="gradient-text">Agricultural Intelligence</span> {/* Changed Title */}
         </h1>
 
         <p className="hero-description">
-          Comprehensive multimodal AI platform for solar monitoring, wind forecasting, 
-          EV optimization, and intelligent grid management. Powered by cutting-edge ML models 
-          and real-time data integration from 30+ global APIs.
+          Comprehensive multimodal AI platform for crop health monitoring, pest forecasting, 
+          yield prediction, and intelligent farm management. Powered by cutting-edge ML models 
+          and real-time data integration from 40+ global APIs. {/* Changed Description */}
         </p>
 
         <div className="hero-buttons">
@@ -264,18 +455,18 @@ const Hero = () => {
 
         <div className="hero-stats">
           <div className="stat-item">
-            <div className="stat-icon"><Zap size={24} /></div>
-            <div className="stat-value">17+</div>
+            <div className="stat-icon"><Leaf size={24} /></div> {/* Changed icon */}
+            <div className="stat-value">16+</div> {/* Changed stat */}
             <div className="stat-label">AI Features</div>
           </div>
           <div className="stat-item">
             <div className="stat-icon"><Database size={24} /></div>
-            <div className="stat-value">50+</div>
+            <div className="stat-value">40+</div> {/* Changed stat */}
             <div className="stat-label">Data Sources</div>
           </div>
           <div className="stat-item">
             <div className="stat-icon"><Cpu size={24} /></div>
-            <div className="stat-value">12+</div>
+            <div className="stat-value">10+</div> {/* Changed stat */}
             <div className="stat-label">ML Models</div>
           </div>
           <div className="stat-item">
@@ -286,12 +477,12 @@ const Hero = () => {
         </div>
 
         <div className="hero-trusted">
-          <p>Trusted by leading energy organizations worldwide</p>
+          <p>Trusted by leading agricultural organizations worldwide</p> {/* Changed text */}
           <div className="trusted-logos">
-            <div className="logo-placeholder">NREL</div>
-            <div className="logo-placeholder">IRENA</div>
-            <div className="logo-placeholder">IEA</div>
-            <div className="logo-placeholder">OpenEI</div>
+            <div className="logo-placeholder">FAO</div> {/* Changed Logo */}
+            <div className="logo-placeholder">USDA</div> {/* Changed Logo */}
+            <div className="logo-placeholder">Copernicus</div> {/* Changed Logo */}
+            <div className="logo-placeholder">Open-Meteo</div> {/* Changed Logo */}
           </div>
         </div>
       </div>
@@ -453,6 +644,7 @@ const FeatureModal = ({ feature, isOpen, onClose }) => {
             <button
               className="btn-primary"
               onClick={() => window.open(feature.demoUrl, "_blank")}
+              disabled={!feature.demoUrl} // Disable button if no demoUrl
             >
               <Play size={18} /> Try Demo
             </button>
@@ -537,12 +729,12 @@ const FeaturesSection = () => {
               <Filter size={16} />
               <span>Platform Features</span>
             </div>
-            <h2 data-text="Comprehensive Energy Intelligence Suite">
-              Comprehensive Energy Intelligence Suite
+            <h2 data-text="Comprehensive Agro-Intelligence Suite">
+              Comprehensive Agro-Intelligence Suite {/* Changed Title */}
             </h2>
             <p>
-              17 advanced AI-powered features for complete renewable energy management, 
-              from solar monitoring to grid optimization and EV fleet management
+              16 advanced AI-powered features for complete farm management, 
+              from crop health and pest detection to yield forecasting and market simulation. {/* Changed Description */}
             </p>
           </div>
 
@@ -658,13 +850,13 @@ const Footer = () => {
           <div className="footer-column main">
             <div className="footer-logo">
               <div className="logo-icon">
-                <Zap className="icon" />
+                <Leaf className="icon" /> {/* Changed icon */}
               </div>
-              <span>EnergyVerse</span>
+              <span>AgroVerse</span> {/* Changed Title */}
             </div>
             <p className="footer-description">
-              AI-powered renewable energy and EV management platform for a sustainable future.
-              Integrating 50+ data sources with 12+ ML models for comprehensive energy intelligence.
+              AI-powered agricultural intelligence platform for a sustainable future.
+              Integrating 40+ data sources with 10+ ML models. {/* Changed Description */}
             </p>
             <div className="footer-social">
               <a href="#" aria-label="Twitter">Twitter</a>
@@ -708,16 +900,16 @@ const Footer = () => {
             <h3>Data Sources</h3>
             <ul>
               <li><a href="#">Sentinel-2 / Landsat</a></li>
-              <li><a href="#">NREL / OpenEI</a></li>
+              <li><a href="#">FAO / USDA</a></li> {/* Changed Link */}
               <li><a href="#">Open-Meteo</a></li>
-              <li><a href="#">IRENA / IEA</a></li>
+              <li><a href="#">Copernicus</a></li> {/* Changed Link */}
               <li><a href="#">View All →</a></li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>© 2025 EnergyVerse. All rights reserved. Built with 💚 for a sustainable future.</p>
+          <p>© 2025 AgroVerse. All rights reserved. Built with 💚 for a sustainable future.</p> {/* Changed Copyright */}
           <div className="footer-links">
             <a href="#terms">Terms of Service</a>
             <span>•</span>
