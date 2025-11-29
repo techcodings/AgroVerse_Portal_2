@@ -790,6 +790,365 @@ body {
   from { opacity:0; transform: translateY(10px); }
   to { opacity:1; transform: translateY(0); }
 }
+/* ---------- Advanced background variants (drop in) ---------- */
+/* Usage: add .bg-variant-autumn OR .bg-variant-dawn to <body> */
+
+/* Shared helpers */
+.bg-animated-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+/* Subtle grain (tiny repeating noise) */
+.bg-grain {
+  background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 3px 3px;
+  opacity: 0.06;
+  animation: grainFlicker 6s steps(4) infinite;
+  z-index: -1;
+}
+
+/* Gentle parallax shapes */
+.bg-shape {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.12;
+  filter: blur(28px) saturate(120%);
+  transform-origin: center;
+  animation: slowFloat 28s linear infinite;
+}
+
+/* soft high-frequency particles */
+.bg-particles {
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 70% 80%, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 120px 120px, 200px 200px;
+  opacity: 0.28;
+  animation: particleDrift 40s linear infinite;
+  mix-blend-mode: overlay;
+}
+
+/* ---------- AUTUMN AGRO (warmer, earthy neon) ---------- */
+.bg-variant-autumn {
+  --bg-a-1: #071308;  /* deep */
+  --bg-a-2: #112815;  /* mid */
+  --accent-a: rgba(234,220,110,0.06);
+  --accent-a-strong: rgba(234,220,110,0.22);
+  --overlay-gradient: linear-gradient(135deg, rgba(60,30,12,0.12), rgba(20,60,20,0.08));
+}
+
+.bg-variant-autumn::before,
+.bg-variant-autumn::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+}
+
+/* slow-moving banded gradient */
+.bg-variant-autumn::before {
+  background: linear-gradient(120deg, var(--bg-a-1) 0%, #0c1f0c 35%, var(--bg-a-2) 100%);
+  animation: bandShiftAutumn 28s linear infinite;
+  opacity: 0.98;
+}
+
+/* layered radial warm glow + moving texture */
+.bg-variant-autumn::after {
+  background:
+    radial-gradient(circle at 12% 22%, rgba(255,184,61,0.06) 0%, transparent 18%),
+    radial-gradient(circle at 82% 78%, rgba(140,220,90,0.04) 0%, transparent 20%),
+    var(--overlay-gradient);
+  animation: glowSweep 36s ease-in-out infinite;
+  mix-blend-mode: overlay;
+  opacity: 0.9;
+}
+/* Shared helpers for animated layers */
+.bg-animated-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+}
+
+/* Subtle grain (tiny repeating noise) */
+.bg-grain {
+  background-image: radial-gradient(rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 3px 3px;
+  opacity: 0.06;
+  animation: grainFlicker 6s steps(4) infinite;
+  z-index: -1;
+}
+
+/* Gentle parallax shapes */
+.bg-shape {
+  position: fixed;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.12;
+  filter: blur(28px) saturate(120%);
+  transform-origin: center;
+  animation: slowFloat 28s linear infinite;
+  z-index: -2;
+}
+
+/* high-frequency particles */
+.bg-particles {
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.06) 1px, transparent 1px),
+    radial-gradient(circle at 70% 80%, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 120px 120px, 200px 200px;
+  opacity: 0.28;
+  animation: particleDrift 40s linear infinite;
+  mix-blend-mode: overlay;
+  z-index: -1;
+}
+
+/* ---------- AUTUMN AGRO (warmer, earthy neon) ---------- */
+.bg-variant-autumn {
+  --bg-a-1: #071308;
+  --bg-a-2: #112815;
+  --accent-a: rgba(234,220,110,0.06);
+  --accent-a-strong: rgba(234,220,110,0.22);
+  --overlay-gradient: linear-gradient(135deg, rgba(60,30,12,0.12), rgba(20,60,20,0.08));
+}
+
+/* base gradient band */
+.bg-variant-autumn::before,
+.bg-variant-autumn::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+}
+
+/* slow-moving banded gradient */
+.bg-variant-autumn::before {
+  background: linear-gradient(120deg, var(--bg-a-1) 0%, #0c1f0c 35%, var(--bg-a-2) 100%);
+  animation: bandShiftAutumn 28s linear infinite;
+  opacity: 0.98;
+}
+
+/* layered radial warm glow + moving texture */
+.bg-variant-autumn::after {
+  background:
+    radial-gradient(circle at 12% 22%, rgba(255,184,61,0.06) 0%, transparent 18%),
+    radial-gradient(circle at 82% 78%, rgba(140,220,90,0.04) 0%, transparent 20%),
+    var(--overlay-gradient);
+  animation: glowSweep 36s ease-in-out infinite;
+  mix-blend-mode: overlay;
+  opacity: 0.9;
+}
+
+/* autumn-specific shape + particles */
+.bg-variant-autumn .bg-grain { z-index: -1; }
+.bg-variant-autumn .bg-shape {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(230,200,80,0.18) 0%, transparent 35%),
+    radial-gradient(circle at 80% 80%, rgba(90,180,80,0.12) 0%, transparent 40%);
+  animation-duration: 34s;
+  transform: translateZ(0) scale(1.02);
+}
+.bg-variant-autumn .bg-particles { opacity: 0.26; }
+
+/* ---------- DAWN MIST (cooler, mist + lime-blue) ---------- */
+.bg-variant-dawn {
+  --bg-d-1: #071814;
+  --bg-d-2: #08121a;
+  --accent-d: rgba(160,255,210,0.06);
+  --accent-d-strong: rgba(120,230,200,0.16);
+  --overlay-d: linear-gradient(165deg, rgba(8,24,20,0.12), rgba(6,10,18,0.06));
+}
+
+.bg-variant-dawn::before,
+.bg-variant-dawn::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+}
+
+/* slow rotating cool gradient */
+.bg-variant-dawn::before {
+  background: radial-gradient(circle at 20% 30%, #072522 0%, #041018 40%, #02060a 100%);
+  animation: rotationDawn 40s linear infinite;
+  opacity: 0.96;
+}
+
+/* thin mist lines and soft spotlight */
+.bg-variant-dawn::after {
+  background:
+    linear-gradient(90deg, rgba(96,245,200,0.02) 0%, rgba(96,245,200,0.04) 30%, transparent 60%),
+    radial-gradient(circle at 75% 25%, rgba(95,230,200,0.06) 0%, transparent 22%);
+  animation: mistDrift 26s ease-in-out infinite;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+.bg-variant-dawn .bg-shape {
+  background-image:
+    radial-gradient(circle at 25% 30%, rgba(110,240,200,0.14) 0%, transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(70,140,220,0.06) 0%, transparent 38%);
+  animation-duration: 30s;
+  transform: translateZ(0) scale(1.01);
+}
+.bg-variant-dawn .bg-particles { opacity: 0.32; }
+
+/* ---------- KEYFRAMES (shared & variant tweaks) ---------- */
+@keyframes bandShiftAutumn {
+  0%   { background-position: 0% 0%; transform: translateZ(0) scale(1); }
+  50%  { background-position: 40% 60%; transform: translateZ(0) scale(1.01); }
+  100% { background-position: 0% 0%; transform: translateZ(0) scale(1); }
+}
+
+@keyframes glowSweep {
+  0% { transform: translate3d(0,0,0) scale(1); opacity:0.8; }
+  50% { transform: translate3d(-30px,-16px,0) scale(1.02); opacity:1; }
+  100% { transform: translate3d(0,0,0) scale(1); opacity:0.85; }
+}
+
+@keyframes rotationDawn {
+  0%   { background-position: 0% 0%; transform: rotate(0deg) scale(1); }
+  50%  { background-position: 40% 50%; transform: rotate(2deg) scale(1.02); }
+  100% { background-position: 0% 0%; transform: rotate(0deg) scale(1); }
+}
+
+@keyframes mistDrift {
+  0% { transform: translateY(0); opacity:0.75; }
+  50% { transform: translateY(-18px); opacity:1; }
+  100% { transform: translateY(0); opacity:0.78; }
+}
+
+@keyframes slowFloat {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  50% { transform: translate3d(-20px,-10px,0) scale(1.01); }
+  100% { transform: translate3d(0,0,0) scale(1); }
+}
+
+@keyframes particleDrift {
+  0% { background-position: 0% 0%, 0% 0%; }
+  50% { background-position: 30% -20%, -10% 30%; }
+  100% { background-position: 0% 0%, 0% 0%; }
+}
+
+@keyframes grainFlicker {
+  0% { opacity: 0.04; }
+  50% { opacity: 0.08; }
+  100% { opacity: 0.04; }
+}
+/* shape + grain + particles */
+.bg-variant-autumn .bg-grain { /* keep tiny grain */
+  z-index: -1;
+}
+.bg-variant-autumn .bg-shape {
+  background-image:
+    radial-gradient(circle at 10% 10%, rgba(230,200,80,0.18) 0%, transparent 35%),
+    radial-gradient(circle at 80% 80%, rgba(90,180,80,0.12) 0%, transparent 40%);
+  animation-duration: 34s;
+  transform: translateZ(0) scale(1.02);
+}
+.bg-variant-autumn .bg-particles { opacity: 0.26; }
+
+/* ---------- DAWN MIST (cooler, mist + lime-blue) ---------- */
+.bg-variant-dawn {
+  --bg-d-1: #071814;
+  --bg-d-2: #08121a;
+  --accent-d: rgba(160,255,210,0.06);
+  --accent-d-strong: rgba(120,230,200,0.16);
+  --overlay-d: linear-gradient(165deg, rgba(8,24,20,0.12), rgba(6,10,18,0.06));
+}
+
+.bg-variant-dawn::before,
+.bg-variant-dawn::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  pointer-events: none;
+}
+
+/* slow rotating cool gradient */
+.bg-variant-dawn::before {
+  background: radial-gradient(circle at 20% 30%, #072522 0%, #041018 40%, #02060a 100%);
+  animation: rotationDawn 40s linear infinite;
+  opacity: 0.96;
+}
+
+/* thin mist lines and soft spotlight */
+.bg-variant-dawn::after {
+  background:
+    linear-gradient(90deg, rgba(96,245,200,0.02) 0%, rgba(96,245,200,0.04) 30%, transparent 60%),
+    radial-gradient(circle at 75% 25%, rgba(95,230,200,0.06) 0%, transparent 22%);
+  animation: mistDrift 26s ease-in-out infinite;
+  mix-blend-mode: screen;
+  opacity: 0.85;
+}
+
+.bg-variant-dawn .bg-shape {
+  background-image:
+    radial-gradient(circle at 25% 30%, rgba(110,240,200,0.14) 0%, transparent 30%),
+    radial-gradient(circle at 80% 70%, rgba(70,140,220,0.06) 0%, transparent 38%);
+  animation-duration: 30s;
+  transform: translateZ(0) scale(1.01);
+}
+.bg-variant-dawn .bg-particles { opacity: 0.32; }
+
+/* ---------- KEYFRAMES (shared & variant tweaks) ---------- */
+@keyframes bandShiftAutumn {
+  0%   { background-position: 0% 0%; transform: translateZ(0) scale(1); }
+  50%  { background-position: 40% 60%; transform: translateZ(0) scale(1.01); }
+  100% { background-position: 0% 0%; transform: translateZ(0) scale(1); }
+}
+
+@keyframes glowSweep {
+  0% { transform: translate3d(0,0,0) scale(1); opacity:0.8; }
+  50% { transform: translate3d(-30px,-16px,0) scale(1.02); opacity:1; }
+  100% { transform: translate3d(0,0,0) scale(1); opacity:0.85; }
+}
+
+@keyframes rotationDawn {
+  0%   { background-position: 0% 0%; transform: rotate(0deg) scale(1); }
+  50%  { background-position: 40% 50%; transform: rotate(2deg) scale(1.02); }
+  100% { background-position: 0% 0%; transform: rotate(0deg) scale(1); }
+}
+
+@keyframes mistDrift {
+  0% { transform: translateY(0); opacity:0.75; }
+  50% { transform: translateY(-18px); opacity:1; }
+  100% { transform: translateY(0); opacity:0.78; }
+}
+
+@keyframes slowFloat {
+  0% { transform: translate3d(0,0,0) scale(1); }
+  50% { transform: translate3d(-20px,-10px,0) scale(1.01); }
+  100% { transform: translate3d(0,0,0) scale(1); }
+}
+
+@keyframes particleDrift {
+  0% { background-position: 0% 0%, 0% 0%; }
+  50% { background-position: 30% -20%, -10% 30%; }
+  100% { background-position: 0% 0%, 0% 0%; }
+}
+
+@keyframes grainFlicker {
+  0% { opacity: 0.04; }
+  50% { opacity: 0.08; }
+  100% { opacity: 0.04; }
+}
 
 .app {
   min-height: 100vh;
