@@ -674,10 +674,17 @@ const FeatureCard = ({ feature, index, onClick }) => {
    FEATURES SECTION
    =========================== */
 
+/* ===========================
+   FEATURES SECTION
+   =========================== */
+
 const FeaturesSection = () => {
   const [activeCategory, setActiveCategory] = useState("All Features");
   const [selectedFeature, setSelectedFeature] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  
+  // 1. Get the location object to read the URL
+  const location = useLocation();
 
   const categories = ["All Features", ...Object.keys(featureCategories || {})];
 
@@ -690,6 +697,30 @@ const FeaturesSection = () => {
     setSelectedFeature(feature);
     setShowModal(true);
   };
+
+  // 2. Add this useEffect to handle the Deep Linking
+  useEffect(() => {
+    // Parse the query parameters (e.g., ?feature=8)
+    const searchParams = new URLSearchParams(location.search);
+    const featureId = searchParams.get("feature");
+
+    if (featureId && allFeatures) {
+      // Find the feature with the matching ID. 
+      // We use '==' to match string "8" from URL with number 8 from data.
+      const featureToOpen = allFeatures.find((f) => f.id == featureId);
+
+      if (featureToOpen) {
+        setSelectedFeature(featureToOpen);
+        setShowModal(true);
+
+        // Optional: Scroll to the features section so it's visible behind the modal
+        const featuresElement = document.getElementById("features");
+        if (featuresElement) {
+          featuresElement.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    }
+  }, [location]); // Re-run if location changes
 
   return (
     <>
@@ -744,7 +775,6 @@ const FeaturesSection = () => {
     </>
   );
 };
-
 /* ===========================
    CAPABILITIES SECTION
    =========================== */
