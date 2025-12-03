@@ -34,7 +34,7 @@ export default function FeatureDocsPage() {
 
       {/* Header */}
       <div className="featuredocs-header">
-        <h1>⚡ EnergyVerse Feature Documentation</h1>
+        <h1>⚡ AgroVerse Feature Documentation</h1>
         <p>
           Dive into detailed technical insights of each AI-powered module —
           inputs, models, and integration structure.
