@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { 
   Menu, X, ChevronRight, Sun, Wind, Battery, Zap, TrendingUp, Globe, 
   Activity, AlertTriangle, BarChart3, Database, Leaf, Users, Settings,
@@ -135,7 +135,7 @@ const allFeatures = [
     ml: ['Large LLM (LLaMA 3 / GPT-4 fine-tuned)', 'Multi-lingual ASR', 'Multimodal Transformer', 'End-to-End MLOps'],
     datasets: ['Sentinel-2', 'Open-Meteo', 'Ag Data Commons', 'Internal Knowledge Base'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://chatbot-8.netlify.app/",
     tags: ['AI Assistant', 'LLM', 'Multilingual', 'NLP']
   },
   {
@@ -832,15 +832,68 @@ const FeaturesSection = () => {
   const [showModal, setShowModal] = useState(false);
 
   const categories = ['All Features', ...Object.keys(featureCategories)];
-  
   const displayedFeatures = activeCategory === 'All Features' 
     ? allFeatures 
     : featureCategories[activeCategory];
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // When clicking a feature card: open modal + update URL ?feature=<id>
   const handleFeatureClick = (feature) => {
     setSelectedFeature(feature);
     setShowModal(true);
+
+    const searchParams = new URLSearchParams(location.search);
+    searchParams.set('feature', feature.id);
+
+    navigate({
+      pathname: location.pathname,
+      search: searchParams.toString()
+    });
   };
+
+  // When closing modal: hide modal + remove ?feature from URL
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedFeature(null);
+
+    const searchParams = new URLSearchParams(location.search);
+    if (searchParams.has('feature')) {
+      searchParams.delete('feature');
+      navigate({
+        pathname: location.pathname,
+        search: searchParams.toString()
+      }, { replace: true });
+    }
+  };
+
+  // On URL change: if ?feature=4 is present, open the correct feature
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const featureId = searchParams.get('feature');
+
+    if (featureId) {
+      const feature = allFeatures.find(
+        (f) => String(f.id) === String(featureId)
+      );
+
+      if (feature) {
+        setSelectedFeature(feature);
+        setShowModal(true);
+
+        // Scroll to the features section for better UX
+        const section = document.querySelector("#features");
+        if (section) {
+          section.scrollIntoView({ behavior: "smooth" });
+        }
+      }
+    } else {
+      // No ?feature in URL → ensure modal is closed
+      setShowModal(false);
+      setSelectedFeature(null);
+    }
+  }, [location.search]);
 
   return (
     <>
@@ -869,7 +922,9 @@ const FeaturesSection = () => {
               >
                 {category}
                 <span className="tab-count">
-                  {category === 'All Features' ? allFeatures.length : featureCategories[category]?.length || 0}
+                  {category === 'All Features'
+                    ? allFeatures.length
+                    : featureCategories[category]?.length || 0}
                 </span>
               </button>
             ))}
@@ -891,7 +946,7 @@ const FeaturesSection = () => {
       <FeatureModal 
         feature={selectedFeature}
         isOpen={showModal}
-        onClose={() => setShowModal(false)}
+        onClose={handleCloseModal}
       />
     </>
   );
