@@ -825,7 +825,6 @@ const FeatureCard = ({ feature, index, onClick }) => {
   );
 };
 
-
 const FeaturesSection = () => {
   const [activeCategory, setActiveCategory] = useState('All Features');
   const [selectedFeature, setSelectedFeature] = useState(null);
@@ -839,13 +838,22 @@ const FeaturesSection = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Helper: scroll Features section to the top of the viewport
+const scrollFeaturesToTop = () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+
   // When clicking a feature card: open modal + update URL ?feature=<id>
   const handleFeatureClick = (feature) => {
     setSelectedFeature(feature);
     setShowModal(true);
 
+    // scroll so that Features section is at the top
+    scrollFeaturesToTop();
+
     const searchParams = new URLSearchParams(location.search);
-    searchParams.set('feature', feature.id);
+    searchParams.set("feature", feature.id);
 
     navigate({
       pathname: location.pathname,
@@ -859,19 +867,22 @@ const FeaturesSection = () => {
     setSelectedFeature(null);
 
     const searchParams = new URLSearchParams(location.search);
-    if (searchParams.has('feature')) {
-      searchParams.delete('feature');
-      navigate({
-        pathname: location.pathname,
-        search: searchParams.toString()
-      }, { replace: true });
+    if (searchParams.has("feature")) {
+      searchParams.delete("feature");
+      navigate(
+        {
+          pathname: location.pathname,
+          search: searchParams.toString()
+        },
+        { replace: true }
+      );
     }
   };
 
   // On URL change: if ?feature=4 is present, open the correct feature
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const featureId = searchParams.get('feature');
+    const featureId = searchParams.get("feature");
 
     if (featureId) {
       const feature = allFeatures.find(
@@ -881,12 +892,8 @@ const FeaturesSection = () => {
       if (feature) {
         setSelectedFeature(feature);
         setShowModal(true);
-
-        // Scroll to the features section for better UX
-        const section = document.querySelector("#features");
-        if (section) {
-          section.scrollIntoView({ behavior: "smooth" });
-        }
+        // ensure features section is at the top when opening from URL
+        scrollFeaturesToTop();
       }
     } else {
       // No ?feature in URL → ensure modal is closed
@@ -918,11 +925,13 @@ const FeaturesSection = () => {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`category-tab ${activeCategory === category ? 'active' : ''}`}
+                className={`category-tab ${
+                  activeCategory === category ? "active" : ""
+                }`}
               >
                 {category}
                 <span className="tab-count">
-                  {category === 'All Features'
+                  {category === "All Features"
                     ? allFeatures.length
                     : featureCategories[category]?.length || 0}
                 </span>
@@ -932,9 +941,9 @@ const FeaturesSection = () => {
 
           <div className="features-grid">
             {displayedFeatures.map((feature, index) => (
-              <FeatureCard 
-                key={feature.id} 
-                feature={feature} 
+              <FeatureCard
+                key={feature.id}
+                feature={feature}
                 index={index}
                 onClick={handleFeatureClick}
               />
@@ -943,7 +952,7 @@ const FeaturesSection = () => {
         </div>
       </section>
 
-      <FeatureModal 
+      <FeatureModal
         feature={selectedFeature}
         isOpen={showModal}
         onClose={handleCloseModal}
