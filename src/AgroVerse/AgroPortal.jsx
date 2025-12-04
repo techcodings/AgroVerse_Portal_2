@@ -30,7 +30,7 @@ const allFeatures = [
     ml: ['Multimodal Transformer (Perceiver IO)', 'GAN / Diffusion Hybrid', 'RL (MuZero)', 'Temporal Forecasting: TFT + N-BEATS', 'GNN', 'End-to-End MLOps pipeline'],
     datasets: ['Sentinel-2', 'MODIS', 'Landsat-8/9', 'Open-Meteo', 'Copernicus', 'FAO AQUASTAT', 'USDA Quick Stats'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://twist-turn-crop.hf.space",
     tags: ['Crop Health', 'Monitoring', 'AI', 'Satellite']
   },
   {
@@ -45,7 +45,7 @@ const allFeatures = [
     ml: ['Multimodal Transformer', 'RL (DreamerV3)', 'GNN', 'End-to-End MLOps'],
     datasets: ['Sentinel-2', 'MODIS', 'Open-Meteo', 'FAO', 'Twitter/X', 'OpenStreetMap'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-pest-disease-early-warning.hf.space/",
     tags: ['Pest', 'Disease', 'Warning', 'AI']
   },
   {
@@ -60,7 +60,7 @@ const allFeatures = [
     ml: ['One-Shot GAN / Diffusion Hybrid', 'RL (MuZero)', 'Temporal Forecasting: TFT + Informer', 'End-to-End MLOps'],
     datasets: ['Landsat-8/9', 'MODIS', 'Open-Meteo', 'Copernicus', 'Ag Data Commons'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "http://bumpy-noellyn-twist-turn-7f5920ed.koyeb.app/",
     tags: ['Simulation', 'Generative AI', 'Forecasting']
   },
   {
@@ -75,7 +75,7 @@ const allFeatures = [
     ml: ['RL (MuZero)', 'Multimodal Transformer', 'PINN', 'Temporal Forecasting: TFT + Neural ODEs', 'End-to-End MLOps'],
     datasets: ['Copernicus', 'SMAP', 'Open-Meteo', 'Open-Elevation', 'USDA ARMS', 'MODIS'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-water-stress-irrigation.hf.space/",
     tags: ['Water', 'Irrigation', 'Optimization', 'AI']
   },
   {
@@ -90,7 +90,7 @@ const allFeatures = [
     ml: ['RL (ConnectX / MuZero)', 'Multimodal Transformer', 'Temporal Forecasting: TFT + Informer', 'Bayesian Ensembles', 'End-to-End MLOps pipeline'],
     datasets: ['Open-Meteo', 'Sentinel-2', 'MODIS', 'Copernicus', 'NewsAPI', 'EuroCropsML', 'NASA FIRMS'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-climate-impact-anomaly-detector.hf.space",
     tags: ['Climate', 'Anomaly', 'Risk', 'Impact']
   },
   {
@@ -105,7 +105,7 @@ const allFeatures = [
     ml: ['Graph Neural Network / Graphormer', 'Multimodal Transformer', 'RL (MuZero)', 'End-to-End MLOps'],
     datasets: ['FAO', 'Sentinel-2', 'Open-Meteo', 'BrAPI', 'ESA CCI'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-knowledge-graph-of-agro-events.hf.space",
     tags: ['Knowledge Graph', 'Events', 'AI', 'GNN']
   },
   {
@@ -120,7 +120,7 @@ const allFeatures = [
     ml: ['Temporal Fusion Transformer + N-BEATS', 'RL (MuZero / Agent57)', 'Anomaly Detection / Bayesian Ensembles', 'End-to-End MLOps'],
     datasets: ['Open-Meteo', 'Sentinel-2', 'FAO', 'NewsAPI', 'Open Food Facts', 'World Bank'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-market-policy-trend-simulator.hf.space",
     tags: ['Market', 'Policy', 'Economics', 'Simulation']
   },
   {
@@ -150,7 +150,7 @@ const allFeatures = [
     ml: ['Multimodal Transformer', 'Temporal Forecasting: TFT + N-BEATS', 'RL (MuZero)', 'GNN', 'Bayesian Ensembles', 'End-to-End MLOps pipeline'],
     datasets: ['Sentinel-2', 'MODIS', 'Landsat', 'Open-Meteo', 'Copernicus', 'EuroCropsML'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-crop-yield-growth-forecasting.hf.space",
     tags: ['Yield', 'Forecasting', 'AI', 'Growth']
   },
   {
@@ -165,7 +165,7 @@ const allFeatures = [
     ml: ['RL (ConnectX)', 'Multimodal Transformer', 'Concept Drift / Anomaly Detection', 'End-to-End MLOps'],
     datasets: ['Open-Meteo', 'Sentinel-2', 'Copernicus', 'USDA', 'Open Food Facts', 'User Reports'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-dashboard.hf.space/",
     tags: ['Risk', 'Dashboard', 'Alerts', 'Monitoring']
   },
   {
@@ -180,7 +180,7 @@ const allFeatures = [
     ml: ['Multimodal Transformer', 'RL (MuZero)', 'Temporal Forecasting: TFT + Neural ODEs', 'GAN / Diffusion', 'End-to-End MLOps'],
     datasets: ['Copernicus', 'FAO', 'Open-Meteo', 'User Reports'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-soil-nutrient-fertility-advisor.hf.space",
     tags: ['Soil', 'Nutrients', 'Fertilizer', 'AI']
   },
   {
@@ -195,7 +195,7 @@ const allFeatures = [
     ml: ['Graph Neural Network', 'RL (MuZero)', 'Multimodal Transformer', 'End-to-End MLOps'],
     datasets: ['Open-Meteo', 'Copernicus', 'BrAPI', 'Historical Yield Data'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-crop-variety-breeding-recommendation.hf.space",
     tags: ['Crops', 'Genetics', 'Recommendation', 'GNN']
   },
   {
@@ -210,7 +210,7 @@ const allFeatures = [
     ml: ['Multimodal Transformer', 'GNN', 'RL (ConnectX)', 'End-to-End MLOps'],
     datasets: ['User Reports', 'Sentinel-2', 'Open-Meteo'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-farmer-community-knowledge-exchange.hf.space",
     tags: ['Community', 'Farmer', 'Knowledge', 'Social']
   },
   {
