@@ -225,7 +225,7 @@ const allFeatures = [
     ml: ['RL (MuZero / Agent57)', 'Temporal Forecasting: TFT + Informer', 'Multimodal Transformer', 'End-to-End MLOps'],
     datasets: ['Open-Meteo', 'World Bank', 'Open Food Facts', 'User Inputs'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-precision-harvest-logistics-planner.hf.space",
     tags: ['Harvest', 'Logistics', 'Planning', 'Optimization']
   },
   {
@@ -240,7 +240,7 @@ const allFeatures = [
     ml: ['Multimodal Transformer', 'GAN / Diffusion', 'RL (MuZero)', 'End-to-End MLOps'],
     datasets: ['Sentinel-2', 'Copernicus', 'Open-Meteo', 'User Reports'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://goutham003-eco-analyer.hf.space",
     tags: ['Sustainability', 'Eco', 'Impact', 'Carbon']
   },
   {
@@ -255,7 +255,7 @@ const allFeatures = [
     ml: ['RL (MuZero / ConnectX)', 'Multimodal Transformer', 'Temporal Forecasting: TFT + Neural ODEs', 'Bayesian Ensemble', 'End-to-End MLOps'],
     datasets: ['Open-Meteo', 'Sentinel-2', 'Copernicus', 'Climate Indices', 'User Plans'],
     integration: 'Backend + User Input',
-    demoUrl: "",
+    demoUrl: "https://1234567890oiuyt-extreme-event-simulation-adaptation.hf.space",
     tags: ['Risk', 'Simulation', 'Climate', 'Adaptation']
   }
 ];
