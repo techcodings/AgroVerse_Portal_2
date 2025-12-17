@@ -277,43 +277,51 @@ const featureCategories = allFeatures.reduce((acc, feature) => {
 
 const AboutSection = () => {
   const people = [
-    {
-      id: 3,
-      name: "Goutham L M",
-      role: "Co-builder · Full-Stack & Agri-AI Engineer",
-      location: "India",
-      bio: "Leads the core architecture, ML pipelines, and UI/UX for AgroVerse, turning crop, climate, and market data into intuitive, production-ready intelligence.",
-      github: "https://github.com/techcodings",
-      linkedin: "https://www.linkedin.com/in/goutham-lm/",
-      website: "https://techcodings.github.io/gouthamlm",
-      tags: ["Full-Stack", "AI / ML", "AgriTech", "Product Builder"],
-      initials: "LMG"
-    },
-    {
-      id: 2,
-      name: "Dinesh",
-      role: "Co-builder · Full-Stack & Agri-AI Engineer",
-      location: "India",
-      bio: "Architects feature modules, backend APIs, and performance optimisations for the AgroVerse stack, bridging data, ML, and real-world farm workflows.",
-      github: "https://github.com/Twist-Turn",
-      linkedin: "https://www.linkedin.com/in/dinesh-kumar-5a1a0b257/",
-      website: "https://dinesh-s-portfolio.vercel.app/",
-      tags: ["Full-Stack", "ML / AI", "AgriTech", "Product Builder"],
-      initials: "D"
-    },
-    {
-      id: 1,
-      name: "Ishaa",
-      role: "Collaborator Slot",
-      location: "Your Team",
-      bio: "Add the next teammate’s details here – update the JSON in AboutSection to show their profile inside the AgroVerse portal.",
-      github: "https://github.com/techcodings",
-      linkedin: "https://www.linkedin.com/in/gouthamlm",
-      website: "https://techcodings.github.io/gouthamlm",
-      tags: ["Collaboration", "AgriTech", "Innovation"],
-      initials: "+"
-    }
-  ];
+  {
+    id: 1,
+    name: "Isha Das",
+    role: "Project Lead & Founder",
+    location: "Lumina Tech · ID Tech Solutions",
+    bio: "Project Lead and Founder driving the vision and execution of Energy Verse, Textile Verse, FMCG Verse, and Agro Verse. Focused on building scalable, data-driven platforms that combine technology, sustainability, and industry-specific intelligence to solve real-world challenges.",
+    github: "https://github.com/",
+    linkedin: "https://www.linkedin.com/",
+    website: "#",
+    tags: [
+      "Project Leadership",
+      "EnergyTech",
+      "TextileTech",
+      "FMCG Solutions",
+      "AgroTech",
+      "Product Strategy"
+    ],
+    initials: "ID"
+  },
+  {
+    id: 2,
+    name: "Dinesh",
+    role: "Co-builder · Full-Stack & AI Engineer",
+    location: "India",
+    bio: "Architects feature modules, backend APIs, and performance optimisations for the EnergyVerse stack, bridging data, ML, and real-world energy workflows.",
+    github: "https://github.com/Twist-Turn",
+    linkedin: "https://www.linkedin.com/in/dinesh-kumar-5a1a0b257/",
+    website: "https://dinesh-s-portfolio.vercel.app/",
+    tags: ["Full-Stack", "ML / AI", "EnergyTech", "Product Builder"],
+    initials: "D"
+  },
+  {
+    id: 3,
+    name: "Goutham L M",
+    role: "Co-builder · Full-Stack & AI Engineer",
+    location: "India",
+    bio: "Leads the core architecture, ML pipelines, and UI/UX for EnergyVerse, turning solar, EV, and grid data into intuitive, production-ready intelligence.",
+    github: "https://github.com/techcodings",
+    linkedin: "https://www.linkedin.com/in/goutham-lm/",
+    website: "https://techcodings.github.io/gouthamlm",
+    tags: ["Full-Stack", "AI / ML", "EnergyTech", "Product Builder"],
+    initials: "LMG"
+  }
+];
+
 
   return (
     <section id="about" className="about-section">
