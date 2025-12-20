@@ -1189,42 +1189,40 @@ export default function VersePortal() {
   }, [showUserMenu]);
 
   // 🔒 If user is not logged in, show only the Auth page
-  if (!user) {
-    return (
-      <div className="auth-only-screen">
-        <Auth 
-          onClose={() => setShowAuth(false)}
-          onAuthSuccess={handleAuthSuccess}
-        />
-      </div>
-    );
-  }
+ 
 
   // ✅ Once logged in, show the full website
   return (
-    <div className="app">
-      <Header 
-        mobileMenuOpen={mobileMenuOpen} 
-        setMobileMenuOpen={setMobileMenuOpen}
-        setShowSearch={setShowSearch}
-        onUserButtonClick={handleUserButtonClick}
-        user={user}
-        showUserMenu={showUserMenu}
-        setShowUserMenu={setShowUserMenu}
-      />
+  <div className="app">
+    <Header 
+      mobileMenuOpen={mobileMenuOpen} 
+      setMobileMenuOpen={setMobileMenuOpen}
+      setShowSearch={setShowSearch}
+      onUserButtonClick={handleUserButtonClick}
+      user={user}
+      showUserMenu={showUserMenu}
+      setShowUserMenu={setShowUserMenu}
+    />
 
-      <Hero />
-      <AboutSection />
+    {/* 🌍 ALWAYS SHOW LANDING PAGE */}
+    <Hero />
+    <AboutSection />
+    <FeaturesSection />
+    <CapabilitiesSection />
+    <Footer />
 
-      <FeaturesSection />
-      <CapabilitiesSection />
-      <Footer />
-      
-      <SearchModal 
-        isOpen={showSearch}
-        onClose={() => setShowSearch(false)}
-        features={allFeatures}
+    {/* 🔐 AUTH OPENS ONLY ON CLICK */}
+    {showAuth && (
+      <Auth
+        onClose={() => setShowAuth(false)}
+        onAuthSuccess={handleAuthSuccess}
       />
-    </div>
-  );
-}
+    )}
+
+    <SearchModal 
+      isOpen={showSearch}
+      onClose={() => setShowSearch(false)}
+      features={allFeatures}
+    />
+  </div>
+);
