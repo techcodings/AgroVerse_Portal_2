@@ -60,7 +60,7 @@ const allFeatures = [
     ml: ['One-Shot GAN / Diffusion Hybrid', 'RL (MuZero)', 'Temporal Forecasting: TFT + Informer', 'End-to-End MLOps'],
     datasets: ['Landsat-8/9', 'MODIS', 'Open-Meteo', 'Copernicus', 'Ag Data Commons'],
     integration: 'Backend + User Input',
-    demoUrl: "http://bumpy-noellyn-twist-turn-7f5920ed.koyeb.app/",
+    demoUrl: "https://twist-turn-third.hf.space/",
     tags: ['Simulation', 'Generative AI', 'Forecasting']
   },
   {
@@ -366,7 +366,7 @@ const AboutSection = () => {
                 {person.github && person.github !== "#" && (
                   <a
                     href={person.github}
-                    target="_blank"
+                    target=""
                     rel="noopener noreferrer"
                   >
                     <Github size={16} />
@@ -376,7 +376,7 @@ const AboutSection = () => {
                 {person.linkedin && person.linkedin !== "#" && (
                   <a
                     href={person.linkedin}
-                    target="_blank"
+                    target=""
                     rel="noopener noreferrer"
                   >
                     <Linkedin size={16} />
@@ -386,7 +386,7 @@ const AboutSection = () => {
                 {person.website && person.website !== "#" && (
                   <a
                     href={person.website}
-                    target="_blank"
+                    target=""
                     rel="noopener noreferrer"
                   >
                     <Globe size={16} />
@@ -772,7 +772,7 @@ const FeatureModal = ({ feature, isOpen, onClose }) => {
           <div className="modal-actions">
             <button
               className="btn-primary"
-              onClick={() => window.open(feature.demoUrl, "_blank")}
+              onClick={() => window.open(feature.demoUrl, "")}
               disabled={!feature.demoUrl}
             >
               <Play size={18} /> Try Demo
