@@ -304,7 +304,7 @@ const AboutSection = () => {
     bio: "Architects feature modules, backend APIs, and performance optimisations for the EnergyVerse stack, bridging data, ML, and real-world energy workflows.",
     github:  "#",
     linkedin: "#",
-    website:  "#"",
+    website:  "#",
     tags: ["Full-Stack", "ML / AI", "EnergyTech", "Product Builder"],
     initials: "D"
   },
